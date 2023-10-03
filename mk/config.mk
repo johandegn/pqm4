@@ -1,2 +1,3 @@
 CPPFLAGS += \
-	-DPQM4
+	-DPQM4 \
+	-DHAVE_CONFIG_H
