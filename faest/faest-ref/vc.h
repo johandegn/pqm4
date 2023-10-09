@@ -19,8 +19,6 @@ typedef struct stream_vec_com_t {
   uint8_t* rootKey;
   uint8_t* layers;
   unsigned int layers_idx;
-//  unsigned int numNodes;
-  unsigned int numLeaves;
   unsigned int depth;
 } stream_vec_com_t;
 
