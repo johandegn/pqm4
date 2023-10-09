@@ -195,13 +195,12 @@ void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lam
   memcpy(node, sVecCom->rootKey, lambdaBytes);
   uint8_t* r_child = malloc(lambdaBytes);
   uint8_t* l_child = malloc(lambdaBytes);
-  // TODO: Refactor out to get intermediate tree nodes
   size_t lo = 0;
   size_t hi = sVecCom->numLeaves - 1;
   size_t center;
 
   // NOTE: Recompute from beginning. Kinda slow. Use the memory later..
-  for (size_t i = 0; i <= sVecCom->depth; i++) {
+  for (size_t i = 0; i < sVecCom->depth; i++) {
     get_children(node, iv, lambda, l_child, r_child);
     //prg(node, iv, children, lambda, lambdaBytes * 2);
 
@@ -227,11 +226,10 @@ void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lam
   free(l_child);
 }
 
-void stream_vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const faest_paramset_t* params,
-                       uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth) {
+void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth) {
   const unsigned int lambdaBytes      = lambda / 8;
   //const unsigned int numVoleInstances = 1 << depth;
-  const unsigned int numNodes = getBinaryTreeNodeCount(depth);
+  //const unsigned int numNodes = getBinaryTreeNodeCount(depth);
   const unsigned int numLeaves = (1 << depth);
   //const unsigned int base_index = numNodes - numLeaves;
 
@@ -246,7 +244,7 @@ void stream_vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const f
   memcpy(sVecCom->rootKey, rootKey, lambdaBytes);
   //sVecCom->layers = calloc(depth, lambdaBytes); // FIXME: should this be: depth - 1?
   //sVecCom->layers_idx = 0; // ODO:
-  sVecCom->numNodes = numNodes;
+  //sVecCom->numNodes = numNodes;
   sVecCom->numLeaves = numLeaves;
   sVecCom->depth = depth;
 
@@ -342,7 +340,7 @@ void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* co
 
   // Step: 7
   uint64_t leafIndex = NumRec(depth, b);
-  uint8_t* sd = malloc(lambdaBytes);
+  uint8_t* sd = malloc(lambdaBytes); // Byproduct
   get_sd_com(sVecCom, iv, lambda, leafIndex, sd, com_j);
   //memcpy(com_j, com + (leafIndex * lambdaBytes * 2), lambdaBytes * 2);
   free(sd);

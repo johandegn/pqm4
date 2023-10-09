@@ -19,7 +19,7 @@ typedef struct stream_vec_com_t {
   uint8_t* rootKey;
   uint8_t* layers;
   unsigned int layers_idx;
-  unsigned int numNodes;
+//  unsigned int numNodes;
   unsigned int numLeaves;
   unsigned int depth;
 } stream_vec_com_t;
@@ -41,8 +41,7 @@ void vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const faest_pa
                        uint32_t lambda, vec_com_t* vecCom, uint32_t depth);
 
 void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
-void stream_vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const faest_paramset_t* params,
-                       uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth);
+void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth);
 
 void vector_open(const uint8_t* k, const uint8_t* com, const uint8_t* b, uint8_t* pdec,
                  uint8_t* com_j, uint32_t depth, uint32_t lambdaBytes);

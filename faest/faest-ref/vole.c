@@ -212,7 +212,7 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
 
     // Step 5
     //vector_commitment(expanded_keys + i * lambda_bytes, iv, params, lambda, &vecCom[i], depth);
-    stream_vector_commitment(expanded_keys + i * lambda_bytes, iv, params, lambda, &sVecCom[i], depth);
+    stream_vector_commitment(expanded_keys + i * lambda_bytes, lambda, &sVecCom[i], depth);
     // Step 6
     StreamToVole(iv, &sVecCom[i], false, lambda, ellhat_bytes, ui + i * ellhat_bytes,
                   v[v_idx], h);
