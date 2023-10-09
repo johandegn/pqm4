@@ -163,6 +163,119 @@ void vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const faest_pa
   H1_final(&h1_ctx, vecCom->h, lambdaBytes * 2);
 }
 
+/* // NOTE: other stuff i wrote
+void get_sd_com(const stream_vec_com_t* vecCom, const uint8_t* iv, uint32_t lambda, unsigned int base_index, unsigned int index, uint8_t* sd, uint8_t* com) {
+  const unsigned int lambdaBytes = lambda / 8;
+
+  const uint8_t* node = (&(vecCom->k)[(base_index + index) * (lambdaBytes)]);
+
+  H0_context_t h0_ctx;
+  H0_init(&h0_ctx, lambda);
+  H0_update(&h0_ctx, node, lambdaBytes);
+  H0_update(&h0_ctx, iv, 16);
+  H0_final(&h0_ctx, sd, lambdaBytes, com, (lambdaBytes * 2));
+}
+*/
+
+static void get_children(const uint8_t* node, const uint8_t* iv, uint32_t lambda, uint8_t* l_child, uint8_t* r_child) {
+  const unsigned int lambda_bytes = lambda / 8;
+  uint8_t* children = malloc(lambda_bytes * 2);
+  prg(node, iv, children, lambda, lambda_bytes * 2);
+  memcpy(l_child, children, lambda_bytes); // FIXME: is this the other way around..?
+  memcpy(r_child, children + lambda_bytes, lambda_bytes);
+  free(children);
+}
+
+// index is the index i for (sd_i, com_i)
+void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
+  const unsigned int lambdaBytes = lambda / 8;
+  //const unsigned int base_index = sVecCom->numNodes - sVecCom->numLeaves;
+
+  uint8_t* node = malloc(lambdaBytes);
+  memcpy(node, sVecCom->rootKey, lambdaBytes);
+  uint8_t* r_child = malloc(lambdaBytes);
+  uint8_t* l_child = malloc(lambdaBytes);
+  // TODO: Refactor out to get intermediate tree nodes
+  size_t lo = 0;
+  size_t hi = sVecCom->numLeaves - 1;
+  size_t center;
+
+  // NOTE: Recompute from beginning. Kinda slow. Use the memory later..
+  for (size_t i = 0; i <= sVecCom->depth; i++) {
+    get_children(node, iv, lambda, l_child, r_child);
+    //prg(node, iv, children, lambda, lambdaBytes * 2);
+
+    center = (hi - lo) / 2 + lo;
+    if (index <= center) { // Left
+      memcpy(node, l_child, lambdaBytes);
+      hi = center;
+    }
+    else { // Right
+      memcpy(node, r_child, lambdaBytes);
+      lo = center + 1;      
+    }
+  }
+
+  H0_context_t h0_ctx;
+  H0_init(&h0_ctx, lambda);
+  H0_update(&h0_ctx, node, lambdaBytes);
+  H0_update(&h0_ctx, iv, IV_SIZE);
+  H0_final(&h0_ctx, sd, lambdaBytes, com, (lambdaBytes * 2));
+
+  free(node);
+  free(r_child);
+  free(l_child);
+}
+
+void stream_vector_commitment(const uint8_t* rootKey, const uint8_t* iv, const faest_paramset_t* params,
+                       uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth) {
+  const unsigned int lambdaBytes      = lambda / 8;
+  //const unsigned int numVoleInstances = 1 << depth;
+  const unsigned int numNodes = getBinaryTreeNodeCount(depth);
+  const unsigned int numLeaves = (1 << depth);
+  //const unsigned int base_index = numNodes - numLeaves;
+
+  // Generating the tree
+  //tree_t tree = generate_seeds(rootKey, iv, params, depth);
+
+  // Initialzing stuff
+  //vecCom->h   = malloc(lambdaBytes * 2);
+  //vecCom->com = malloc(numVoleInstances * lambdaBytes * 2);
+  //vecCom->sd  = malloc(numVoleInstances * lambdaBytes);
+  sVecCom->rootKey = malloc(lambdaBytes);
+  memcpy(sVecCom->rootKey, rootKey, lambdaBytes);
+  //sVecCom->layers = calloc(depth, lambdaBytes); // FIXME: should this be: depth - 1?
+  //sVecCom->layers_idx = 0; // ODO:
+  sVecCom->numNodes = numNodes;
+  sVecCom->numLeaves = numLeaves;
+  sVecCom->depth = depth;
+
+  // Step: 1..3
+  //vecCom->k = NODE(tree, 0, lambdaBytes);
+
+  // Step: 4..5
+  //const unsigned int base_index = tree.numNodes - tree.numLeaves;
+
+  /* // NOTE: other stuff i wrote
+  for (unsigned int i = 0; i < numVoleInstances; i++) {
+    get_sd_com(vecCom, iv, lambda, base_index, i, vecCom->sd + (i * lambdaBytes),
+               vecCom->com + (i * (lambdaBytes * 2)));
+  }
+  */
+
+  //tree.nodes = NULL;
+
+  // Step: 6
+  /* // FIXME: make somewhere else..
+  H1_context_t h1_ctx;
+  H1_init(&h1_ctx, lambda);
+  for (uint32_t j = 0; j < numVoleInstances; j++) {
+    H1_update(&h1_ctx, vecCom->com + (j * (lambdaBytes * 2)), (lambdaBytes * 2));
+  }
+  H1_final(&h1_ctx, vecCom->h, lambdaBytes * 2);
+  */
+}
+
 void vector_open(const uint8_t* k, const uint8_t* com, const uint8_t* b, uint8_t* cop,
                  uint8_t* com_j, uint32_t depth, uint32_t lambdaBytes) {
   // Step: 1
@@ -178,6 +291,62 @@ void vector_open(const uint8_t* k, const uint8_t* com, const uint8_t* b, uint8_t
 
   // Step: 7
   memcpy(com_j, com + (leafIndex * lambdaBytes * 2), lambdaBytes * 2);
+}
+
+void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* cop,
+                 uint8_t* com_j, uint32_t depth,  const uint8_t* iv, uint32_t lambda) {
+  // Step: 1
+  const unsigned int lambdaBytes = lambda / 8;
+  uint8_t* node = malloc(lambdaBytes);
+  uint8_t* l_child = malloc(lambdaBytes);
+  uint8_t* r_child = malloc(lambdaBytes);
+  memcpy(node, sVecCom->rootKey, lambdaBytes);
+
+  // Step: 3..6
+  uint8_t save_left;
+  //uint32_t a = 0;
+  for (uint32_t i = 0; i < depth; i++) {
+    // b = 0 => Right
+    // b = 1 => Left
+    get_children(node, iv, lambda, l_child, r_child);
+    save_left = b[depth - 1 - i];
+    if (save_left) {
+      memcpy(cop + (lambdaBytes * i), l_child, lambdaBytes);
+      memcpy(node, r_child, lambdaBytes);
+    }
+    else {
+      memcpy(cop + (lambdaBytes * i), r_child, lambdaBytes);
+      memcpy(node, l_child, lambdaBytes);
+    }
+
+    /*
+    memcpy(cop + (lambdaBytes * i),
+           k + (lambdaBytes * getNodeIndex(i + 1, (2 * a) + !b[depth - 1 - i])), lambdaBytes);
+    a = (2 * a) + b[depth - 1 - i];
+    */
+  }
+  free(l_child);
+  free(r_child);
+  // First iteration:
+  // getNodeIndex(1, 0/1).
+  //   b = 0 => getNodeIndex(1, 1) = 2, a = 0
+  //   b = 1 => getNodeIndex(1, 0) = 1, a = 1
+
+  // Second iteration:
+  // getNodeIndex(1, 0/1/2/3).
+  //  a = 0, b = 0 => getNodeIndex(2, 1) = 4
+  //  a = 1, b = 0 => getNodeIndex(2, 3) = 6
+  //  a = 0, b = 1 => getNodeIndex(2, 0) = 3
+  //  a = 1, b = 1 => getNodeIndex(2, 2) = 5
+  
+
+  // Step: 7
+  uint64_t leafIndex = NumRec(depth, b);
+  uint8_t* sd = malloc(lambdaBytes);
+  get_sd_com(sVecCom, iv, lambda, leafIndex, sd, com_j);
+  //memcpy(com_j, com + (leafIndex * lambdaBytes * 2), lambdaBytes * 2);
+  free(sd);
+  free(node);
 }
 
 void vector_reconstruction(const uint8_t* iv, const uint8_t* cop, const uint8_t* com_j,
@@ -320,6 +489,11 @@ void vec_com_clear(vec_com_t* com) {
   free(com->com);
   free(com->k);
   free(com->h);
+}
+
+void stream_vec_com_clear(stream_vec_com_t* scom) {
+  free(scom->rootKey);
+  //free(scom->layers); // TODO: smart stuff
 }
 
 void vec_com_rec_clear(vec_com_rec_t* rec) {

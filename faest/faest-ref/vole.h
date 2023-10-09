@@ -18,6 +18,10 @@ void vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int ellhat,
                  const faest_paramset_t* params, uint8_t* hcom, vec_com_t* vecCom, uint8_t* c,
                  uint8_t* u, uint8_t** v);
 
+void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int ellhat,
+                 const faest_paramset_t* params, uint8_t* hcom, stream_vec_com_t* sVecCom, uint8_t* c,
+                 uint8_t* u, uint8_t** v);
+
 void vole_reconstruct(const uint8_t* iv, const uint8_t* chal, const uint8_t* const* pdec,
                       const uint8_t* const* com_j, uint8_t* hcom, uint8_t** q, unsigned int ellhat,
                       const faest_paramset_t* params);

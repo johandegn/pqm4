@@ -277,7 +277,7 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
 
   // Step: 3
   uint8_t hcom[MAX_LAMBDA_BYTES * 2];
-  vec_com_t* vecCom = calloc(tau, sizeof(vec_com_t));
+  stream_vec_com_t* sVecCom = calloc(tau, sizeof(stream_vec_com_t));
   uint8_t* u        = malloc(ell_hat_bytes);
   // v has \hat \ell rows, \lambda columns, storing in column-major order
   uint8_t** V = malloc(lambda * sizeof(uint8_t*));
@@ -285,7 +285,7 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   for (unsigned int i = 1; i < lambda; ++i) {
     V[i] = V[0] + i * ell_hat_bytes;
   }
-  vole_commit(rootkey, signature_iv(sig, params), ell_hat, params, hcom, vecCom,
+  stream_vole_commit(rootkey, signature_iv(sig, params), ell_hat, params, hcom, sVecCom,
               signature_c(sig, 0, params), u, V);
 
   // Step: 4
@@ -349,12 +349,12 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
             params->faest_param.k1, params->faest_param.t1, s_);
     // Step 21
     const unsigned int depth = i < tau0 ? params->faest_param.k0 : params->faest_param.k1;
-    vector_open(vecCom[i].k, vecCom[i].com, s_, signature_pdec(sig, i, params),
-                signature_com(sig, i, params), depth, lambdaBytes);
-    vec_com_clear(&vecCom[i]);
+    stream_vector_open(&sVecCom[i], s_, signature_pdec(sig, i, params),
+                signature_com(sig, i, params), depth, signature_iv(sig, params), lambda);
+    stream_vec_com_clear(&sVecCom[i]);
   }
-  free(vecCom);
-  vecCom = NULL;
+  free(sVecCom);
+  sVecCom = NULL;
 }
 
 int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const uint8_t* owf_input,

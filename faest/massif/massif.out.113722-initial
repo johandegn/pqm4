@@ -1,0 +1,2367 @@
+desc: (none)
+cmd: ./faest-test
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=26521587
+mem_heap_B=360455
+mem_heap_extra_B=62273
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=73106498
+mem_heap_B=2145711
+mem_heap_extra_B=62281
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=103783865
+mem_heap_B=2146343
+mem_heap_extra_B=62305
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=132773328
+mem_heap_B=556463
+mem_heap_extra_B=62273
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=151774055
+mem_heap_B=687703
+mem_heap_extra_B=62297
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=198291183
+mem_heap_B=2473407
+mem_heap_extra_B=62313
+mem_stacks_B=0
+heap_tree=detailed
+n7: 2473407 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875A50: vole_commit (vole.c:111)
+   n1: 1589248 0x484F045: faest_sign (faest.c:288)
+    n1: 1589248 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1589248 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1589248 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1589248 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 262144 0x4874181: vector_commitment (vc.c:121)
+  n1: 262144 0x48759D4: vole_commit (vole.c:109)
+   n1: 262144 0x484F045: faest_sign (faest.c:288)
+    n1: 262144 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 262144 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 262144 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 262144 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 262112 0x4873D8A: create_tree (vc.c:37)
+  n1: 262112 0x4873F46: generate_seeds (vc.c:70)
+   n1: 262112 0x4874149: vector_commitment (vc.c:117)
+    n1: 262112 0x48759D4: vole_commit (vole.c:109)
+     n1: 262112 0x484F045: faest_sign (faest.c:288)
+      n1: 262112 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 262112 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 262112 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 262112 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131072 0x48741A6: vector_commitment (vc.c:122)
+  n1: 131072 0x48759D4: vole_commit (vole.c:109)
+   n1: 131072 0x484F045: faest_sign (faest.c:288)
+    n1: 131072 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 131072 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 131072 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 131072 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 120688 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 55024 in 32 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 59543 in 35 places, all below massif's threshold (1.00%)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=228974214
+mem_heap_B=2473591
+mem_heap_extra_B=62329
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=257957265
+mem_heap_B=884159
+mem_heap_extra_B=62305
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=276958174
+mem_heap_B=1015399
+mem_heap_extra_B=62329
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=323475302
+mem_heap_B=2801103
+mem_heap_extra_B=62345
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=354158333
+mem_heap_B=2801287
+mem_heap_extra_B=62361
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=383141384
+mem_heap_B=1211855
+mem_heap_extra_B=62337
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=402142293
+mem_heap_B=1343095
+mem_heap_extra_B=62361
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=448659421
+mem_heap_B=3128799
+mem_heap_extra_B=62377
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=479342452
+mem_heap_B=3128983
+mem_heap_extra_B=62393
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=508325503
+mem_heap_B=1539551
+mem_heap_extra_B=62369
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=527326412
+mem_heap_B=1670791
+mem_heap_extra_B=62393
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=573843540
+mem_heap_B=3456495
+mem_heap_extra_B=62409
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=604526571
+mem_heap_B=3456679
+mem_heap_extra_B=62425
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=633509622
+mem_heap_B=1867247
+mem_heap_extra_B=62401
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=652510531
+mem_heap_B=1998487
+mem_heap_extra_B=62425
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=699027659
+mem_heap_B=3784191
+mem_heap_extra_B=62441
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=729710690
+mem_heap_B=3784375
+mem_heap_extra_B=62457
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=758693741
+mem_heap_B=2194943
+mem_heap_extra_B=62433
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=777702466
+mem_heap_B=2326183
+mem_heap_extra_B=62457
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=824226979
+mem_heap_B=4112519
+mem_heap_extra_B=62497
+mem_stacks_B=0
+heap_tree=peak
+n7: 4112519 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875A50: vole_commit (vole.c:111)
+   n1: 1589248 0x484F045: faest_sign (faest.c:288)
+    n1: 1589248 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1589248 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1589248 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1589248 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 917504 0x4874181: vector_commitment (vc.c:121)
+  n1: 917504 0x48759D4: vole_commit (vole.c:109)
+   n1: 917504 0x484F045: faest_sign (faest.c:288)
+    n1: 917504 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 917504 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 917504 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 917504 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 917392 0x4873D8A: create_tree (vc.c:37)
+  n1: 917392 0x4873F46: generate_seeds (vc.c:70)
+   n1: 917392 0x4874149: vector_commitment (vc.c:117)
+    n1: 917392 0x48759D4: vole_commit (vole.c:109)
+     n1: 917392 0x484F045: faest_sign (faest.c:288)
+      n1: 917392 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 917392 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 917392 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 917392 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 458752 0x48741A6: vector_commitment (vc.c:122)
+  n1: 458752 0x48759D4: vole_commit (vole.c:109)
+   n1: 458752 0x484F045: faest_sign (faest.c:288)
+    n1: 458752 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 458752 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 458752 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 458752 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 121320 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 121320 in 34 places, all below massif's threshold (1.00%)
+ n0: 59703 in 35 places, all below massif's threshold (1.00%)
+ n1: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n0: 48600 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=27
+#-----------
+time=854902625
+mem_heap_B=4112071
+mem_heap_extra_B=62489
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=883885676
+mem_heap_B=2522639
+mem_heap_extra_B=62465
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=916647123
+mem_heap_B=3481119
+mem_heap_extra_B=62505
+mem_stacks_B=0
+heap_tree=detailed
+n7: 3481119 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 983040 0x4874181: vector_commitment (vc.c:121)
+  n1: 983040 0x48759D4: vole_commit (vole.c:109)
+   n1: 983040 0x484F045: faest_sign (faest.c:288)
+    n1: 983040 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 983040 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 983040 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 983040 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 982912 0x4873D8A: create_tree (vc.c:37)
+  n1: 982912 0x4873F46: generate_seeds (vc.c:70)
+   n1: 982912 0x4874149: vector_commitment (vc.c:117)
+    n1: 982912 0x48759D4: vole_commit (vole.c:109)
+     n1: 982912 0x484F045: faest_sign (faest.c:288)
+      n1: 982912 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 982912 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 982912 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 982912 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 794624 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 794624 0x4875A50: vole_commit (vole.c:111)
+   n1: 794624 0x484F045: faest_sign (faest.c:288)
+    n1: 794624 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 794624 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 794624 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 794624 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 491520 0x48741A6: vector_commitment (vc.c:122)
+  n1: 491520 0x48759D4: vole_commit (vole.c:109)
+   n1: 491520 0x484F045: faest_sign (faest.c:288)
+    n1: 491520 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 491520 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 491520 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 491520 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 120688 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 120688 in 34 places, all below massif's threshold (1.00%)
+ n0: 59735 in 35 places, all below massif's threshold (1.00%)
+ n1: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n0: 48600 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=30
+#-----------
+time=955973871
+mem_heap_B=2752199
+mem_heap_extra_B=62521
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=994498240
+mem_heap_B=3645159
+mem_heap_extra_B=62553
+mem_stacks_B=0
+heap_tree=detailed
+n7: 3645159 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1048576 0x4874181: vector_commitment (vc.c:121)
+  n1: 1048576 0x48759D4: vole_commit (vole.c:109)
+   n1: 1048576 0x484F045: faest_sign (faest.c:288)
+    n1: 1048576 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1048576 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1048576 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1048576 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 1048432 0x4873D8A: create_tree (vc.c:37)
+  n1: 1048432 0x4873F46: generate_seeds (vc.c:70)
+   n1: 1048432 0x4874149: vector_commitment (vc.c:117)
+    n1: 1048432 0x48759D4: vole_commit (vole.c:109)
+     n1: 1048432 0x484F045: faest_sign (faest.c:288)
+      n1: 1048432 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 1048432 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 1048432 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 1048432 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 794624 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 794624 0x4875A50: vole_commit (vole.c:111)
+   n1: 794624 0x484F045: faest_sign (faest.c:288)
+    n1: 794624 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 794624 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 794624 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 794624 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 524288 0x48741A6: vector_commitment (vc.c:122)
+  n1: 524288 0x48759D4: vole_commit (vole.c:109)
+   n1: 524288 0x484F045: faest_sign (faest.c:288)
+    n1: 524288 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 524288 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 524288 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 524288 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 120872 in 34 places, all below massif's threshold (1.00%)
+ n0: 59767 in 35 places, all below massif's threshold (1.00%)
+ n1: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n0: 48600 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=32
+#-----------
+time=1018565926
+mem_heap_B=2916055
+mem_heap_extra_B=62553
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=1056918002
+mem_heap_B=3809015
+mem_heap_extra_B=62585
+mem_stacks_B=0
+heap_tree=detailed
+n7: 3809015 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1114112 0x4874181: vector_commitment (vc.c:121)
+  n1: 1114112 0x48759D4: vole_commit (vole.c:109)
+   n1: 1114112 0x484F045: faest_sign (faest.c:288)
+    n1: 1114112 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1114112 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1114112 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1114112 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 1113952 0x4873D8A: create_tree (vc.c:37)
+  n1: 1113952 0x4873F46: generate_seeds (vc.c:70)
+   n1: 1113952 0x4874149: vector_commitment (vc.c:117)
+    n1: 1113952 0x48759D4: vole_commit (vole.c:109)
+     n1: 1113952 0x484F045: faest_sign (faest.c:288)
+      n1: 1113952 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 1113952 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 1113952 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 1113952 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 794624 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 794624 0x4875A50: vole_commit (vole.c:111)
+   n1: 794624 0x484F045: faest_sign (faest.c:288)
+    n1: 794624 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 794624 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 794624 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 794624 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 557056 0x48741A6: vector_commitment (vc.c:122)
+  n1: 557056 0x48759D4: vole_commit (vole.c:109)
+   n1: 557056 0x484F045: faest_sign (faest.c:288)
+    n1: 557056 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 557056 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 557056 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 557056 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 120872 in 34 places, all below massif's threshold (1.00%)
+ n0: 59799 in 35 places, all below massif's threshold (1.00%)
+ n1: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n0: 48600 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=34
+#-----------
+time=1104730314
+mem_heap_B=3972871
+mem_heap_extra_B=62617
+mem_stacks_B=0
+heap_tree=detailed
+n7: 3972871 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1179648 0x4874181: vector_commitment (vc.c:121)
+  n1: 1179648 0x48759D4: vole_commit (vole.c:109)
+   n1: 1179648 0x484F045: faest_sign (faest.c:288)
+    n1: 1179648 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1179648 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1179648 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1179648 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 1179472 0x4873D8A: create_tree (vc.c:37)
+  n1: 1179472 0x4873F46: generate_seeds (vc.c:70)
+   n1: 1179472 0x4874149: vector_commitment (vc.c:117)
+    n1: 1179472 0x48759D4: vole_commit (vole.c:109)
+     n1: 1179472 0x484F045: faest_sign (faest.c:288)
+      n1: 1179472 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 1179472 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 1179472 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 1179472 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 794624 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 794624 0x4875A50: vole_commit (vole.c:111)
+   n1: 794624 0x484F045: faest_sign (faest.c:288)
+    n1: 794624 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 794624 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 794624 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 794624 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 589824 0x48741A6: vector_commitment (vc.c:122)
+  n1: 589824 0x48759D4: vole_commit (vole.c:109)
+   n1: 589824 0x484F045: faest_sign (faest.c:288)
+    n1: 589824 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 589824 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 589824 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 589824 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 120872 in 34 places, all below massif's threshold (1.00%)
+ n0: 59831 in 35 places, all below massif's threshold (1.00%)
+ n1: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n0: 48600 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=35
+#-----------
+time=1134297665
+mem_heap_B=3175753
+mem_heap_extra_B=62567
+mem_stacks_B=0
+heap_tree=detailed
+n6: 3175753 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1179648 0x4874181: vector_commitment (vc.c:121)
+  n1: 1179648 0x48759D4: vole_commit (vole.c:109)
+   n1: 1179648 0x484F045: faest_sign (faest.c:288)
+    n1: 1179648 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 1179648 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 1179648 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 1179648 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 1179472 0x4873D8A: create_tree (vc.c:37)
+  n1: 1179472 0x4873F46: generate_seeds (vc.c:70)
+   n1: 1179472 0x4874149: vector_commitment (vc.c:117)
+    n1: 1179472 0x48759D4: vole_commit (vole.c:109)
+     n1: 1179472 0x484F045: faest_sign (faest.c:288)
+      n1: 1179472 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+       n1: 1179472 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+        n1: 1179472 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+         n0: 1179472 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 589824 0x48741A6: vector_commitment (vc.c:122)
+  n1: 589824 0x48759D4: vole_commit (vole.c:109)
+   n1: 589824 0x484F045: faest_sign (faest.c:288)
+    n1: 589824 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+     n1: 589824 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+      n1: 589824 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+       n0: 589824 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 120688 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 87280 in 33 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 57521 in 36 places, all below massif's threshold (1.00%)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n1: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n0: 34320 in 3 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=36
+#-----------
+time=1231930676
+mem_heap_B=3175913
+mem_heap_extra_B=62575
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=1241913951
+mem_heap_B=3201193
+mem_heap_extra_B=62599
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=1334590094
+mem_heap_B=3211465
+mem_heap_extra_B=62639
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=1375898410
+mem_heap_B=3178489
+mem_heap_extra_B=62583
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=1395395200
+mem_heap_B=619327
+mem_heap_extra_B=62241
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=1440170713
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=1470778848
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=detailed
+n9: 2208575 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875F3D: vole_reconstruct (vole.c:178)
+   n1: 1589248 0x484F849: faest_verify (faest.c:393)
+    n1: 1589248 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+     n1: 1589248 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 1589248 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 55208 in 32 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+ n0: 31823 in 50 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+#-----------
+snapshot=43
+#-----------
+time=1508781562
+mem_heap_B=619327
+mem_heap_extra_B=62241
+mem_stacks_B=0
+heap_tree=detailed
+n9: 619327 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n6: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 20624 in 29 places, all below massif's threshold (1.00%)
+  n2: 16512 0x4C7B80C: OPENSSL_LH_new (lhash.c:59)
+   n1: 16128 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 16128 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 16128 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 16128 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 16128 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 16128 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 16128 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 16128 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 16128 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 16128 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 16128 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 16128 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 16128 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 16128 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 16128 0x484DA58: prg (aes.c:377)
+                  n1: 16128 0x487592B: vole_commit (vole.c:97)
+                   n1: 16128 0x484F045: faest_sign (faest.c:288)
+                    n1: 16128 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 16128 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 16128 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 16128 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 384 in 7 places, all below massif's threshold (1.00%)
+  n2: 9504 0x4C7B7ED: OPENSSL_LH_new (lhash.c:51)
+   n1: 9072 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 9072 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 9072 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 9072 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 9072 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 9072 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 9072 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 9072 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 9072 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 9072 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 9072 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 9072 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 9072 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 9072 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 9072 0x484DA58: prg (aes.c:377)
+                  n1: 9072 0x487592B: vole_commit (vole.c:97)
+                   n1: 9072 0x484F045: faest_sign (faest.c:288)
+                    n1: 9072 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 9072 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 9072 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 9072 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 432 in 7 places, all below massif's threshold (1.00%)
+  n2: 8568 0x4C8F891: CRYPTO_THREAD_lock_new (threads_pthread.c:50)
+   n1: 7056 0x4C5DB71: evp_cipher_new (evp_enc.c:1484)
+    n1: 7056 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+     n1: 7056 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+      n1: 7056 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+       n1: 7056 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 7056 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 7056 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 7056 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 7056 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 7056 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 7056 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 7056 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 7056 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 7056 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 7056 0x484DA58: prg (aes.c:377)
+                  n1: 7056 0x487592B: vole_commit (vole.c:97)
+                   n1: 7056 0x484F045: faest_sign (faest.c:288)
+                    n1: 7056 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 7056 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 7056 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 7056 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 1512 in 22 places, all below massif's threshold (1.00%)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n1: 8400 0x4C7DA95: UnknownInlinedFun (core_namemap.c:26)
+   n1: 8400 0x4C7DA95: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:266)
+    n0: 8400 in 2 places, all below massif's threshold (1.00%)
+  n0: 5880 in 6 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 20559 in 50 places, all below massif's threshold (1.00%)
+ n1: 11264 0x4C7BAD4: UnknownInlinedFun (lhash.c:224)
+  n2: 11264 0x4C7BAD4: OPENSSL_LH_insert (lhash.c:114)
+   n1: 8192 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+    n2: 8192 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+     n2: 8192 0x4C3721F: ERR_load_strings_const (err.c:302)
+      n1: 8192 0x4C89EAC: UnknownInlinedFun (ocsp_err.c:69)
+       n1: 8192 0x4C89EAC: UnknownInlinedFun (err_all.c:90)
+        n1: 8192 0x4C89EAC: UnknownInlinedFun (init.c:190)
+         n1: 8192 0x4C89EAC: ossl_init_load_crypto_strings_ossl_ (init.c:181)
+          n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+           n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+            n1: 8192 0x4C8B9F5: OPENSSL_init_crypto (init.c:549)
+             n1: 8192 0x4C38DD6: ossl_err_get_state_int (err.c:704)
+              n1: 8192 0x4C397AC: ERR_set_mark (err.c:882)
+               n1: 8192 0x4BE0D43: CONF_modules_load_file_ex (conf_mod.c:187)
+                n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:68)
+                 n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:44)
+                  n1: 8192 0x4C8AEB9: UnknownInlinedFun (init.c:249)
+                   n1: 8192 0x4C8AEB9: ossl_init_config_ossl_ (init.c:247)
+                    n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+                     n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+                      n1: 8192 0x4C8BC7C: OPENSSL_init_crypto (init.c:588)
+                       n1: 8192 0x4D6ED2E: ossl_engine_table_select.isra.0 (eng_table.c:208)
+                        n1: 8192 0x4C60709: evp_cipher_init_internal (evp_enc.c:133)
+                         n1: 8192 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                          n1: 8192 0x484DA58: prg (aes.c:377)
+                           n1: 8192 0x487592B: vole_commit (vole.c:97)
+                            n1: 8192 0x484F045: faest_sign (faest.c:288)
+                             n1: 8192 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                              n1: 8192 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                               n1: 8192 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                                n0: 8192 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 0 in 3 places, all below massif's threshold (1.00%)
+     n0: 0 in 2 places, all below massif's threshold (1.00%)
+   n0: 3072 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=44
+#-----------
+time=1519279369
+mem_heap_B=619327
+mem_heap_extra_B=62241
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=1564054195
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=1594370181
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=detailed
+n9: 2208575 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875F3D: vole_reconstruct (vole.c:178)
+   n1: 1589248 0x484F849: faest_verify (faest.c:393)
+    n1: 1589248 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+     n1: 1589248 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 1589248 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 55208 in 32 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+ n0: 31823 in 50 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+#-----------
+snapshot=47
+#-----------
+time=1640867267
+mem_heap_B=619327
+mem_heap_extra_B=62241
+mem_stacks_B=0
+heap_tree=detailed
+n9: 619327 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n6: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 20624 in 29 places, all below massif's threshold (1.00%)
+  n2: 16512 0x4C7B80C: OPENSSL_LH_new (lhash.c:59)
+   n1: 16128 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 16128 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 16128 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 16128 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 16128 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 16128 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 16128 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 16128 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 16128 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 16128 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 16128 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 16128 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 16128 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 16128 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 16128 0x484DA58: prg (aes.c:377)
+                  n1: 16128 0x487592B: vole_commit (vole.c:97)
+                   n1: 16128 0x484F045: faest_sign (faest.c:288)
+                    n1: 16128 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 16128 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 16128 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 16128 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 384 in 7 places, all below massif's threshold (1.00%)
+  n2: 9504 0x4C7B7ED: OPENSSL_LH_new (lhash.c:51)
+   n1: 9072 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 9072 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 9072 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 9072 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 9072 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 9072 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 9072 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 9072 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 9072 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 9072 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 9072 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 9072 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 9072 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 9072 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 9072 0x484DA58: prg (aes.c:377)
+                  n1: 9072 0x487592B: vole_commit (vole.c:97)
+                   n1: 9072 0x484F045: faest_sign (faest.c:288)
+                    n1: 9072 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 9072 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 9072 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 9072 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 432 in 7 places, all below massif's threshold (1.00%)
+  n2: 8568 0x4C8F891: CRYPTO_THREAD_lock_new (threads_pthread.c:50)
+   n1: 7056 0x4C5DB71: evp_cipher_new (evp_enc.c:1484)
+    n1: 7056 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+     n1: 7056 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+      n1: 7056 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+       n1: 7056 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 7056 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 7056 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 7056 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 7056 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 7056 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 7056 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 7056 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 7056 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 7056 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 7056 0x484DA58: prg (aes.c:377)
+                  n1: 7056 0x487592B: vole_commit (vole.c:97)
+                   n1: 7056 0x484F045: faest_sign (faest.c:288)
+                    n1: 7056 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 7056 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 7056 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 7056 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 1512 in 22 places, all below massif's threshold (1.00%)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n1: 8400 0x4C7DA95: UnknownInlinedFun (core_namemap.c:26)
+   n1: 8400 0x4C7DA95: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:266)
+    n0: 8400 in 2 places, all below massif's threshold (1.00%)
+  n0: 5880 in 6 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 20559 in 50 places, all below massif's threshold (1.00%)
+ n1: 11264 0x4C7BAD4: UnknownInlinedFun (lhash.c:224)
+  n2: 11264 0x4C7BAD4: OPENSSL_LH_insert (lhash.c:114)
+   n1: 8192 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+    n2: 8192 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+     n2: 8192 0x4C3721F: ERR_load_strings_const (err.c:302)
+      n1: 8192 0x4C89EAC: UnknownInlinedFun (ocsp_err.c:69)
+       n1: 8192 0x4C89EAC: UnknownInlinedFun (err_all.c:90)
+        n1: 8192 0x4C89EAC: UnknownInlinedFun (init.c:190)
+         n1: 8192 0x4C89EAC: ossl_init_load_crypto_strings_ossl_ (init.c:181)
+          n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+           n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+            n1: 8192 0x4C8B9F5: OPENSSL_init_crypto (init.c:549)
+             n1: 8192 0x4C38DD6: ossl_err_get_state_int (err.c:704)
+              n1: 8192 0x4C397AC: ERR_set_mark (err.c:882)
+               n1: 8192 0x4BE0D43: CONF_modules_load_file_ex (conf_mod.c:187)
+                n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:68)
+                 n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:44)
+                  n1: 8192 0x4C8AEB9: UnknownInlinedFun (init.c:249)
+                   n1: 8192 0x4C8AEB9: ossl_init_config_ossl_ (init.c:247)
+                    n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+                     n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+                      n1: 8192 0x4C8BC7C: OPENSSL_init_crypto (init.c:588)
+                       n1: 8192 0x4D6ED2E: ossl_engine_table_select.isra.0 (eng_table.c:208)
+                        n1: 8192 0x4C60709: evp_cipher_init_internal (evp_enc.c:133)
+                         n1: 8192 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                          n1: 8192 0x484DA58: prg (aes.c:377)
+                           n1: 8192 0x487592B: vole_commit (vole.c:97)
+                            n1: 8192 0x484F045: faest_sign (faest.c:288)
+                             n1: 8192 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                              n1: 8192 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                               n1: 8192 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                                n0: 8192 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 0 in 3 places, all below massif's threshold (1.00%)
+     n0: 0 in 2 places, all below massif's threshold (1.00%)
+   n0: 3072 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=48
+#-----------
+time=1687938302
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=1709991715
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=detailed
+n9: 2208575 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875F3D: vole_reconstruct (vole.c:178)
+   n1: 1589248 0x484F849: faest_verify (faest.c:393)
+    n1: 1589248 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+     n1: 1589248 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 1589248 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 55208 in 32 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+ n0: 31823 in 50 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+#-----------
+snapshot=50
+#-----------
+time=1747596862
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=1757580242
+mem_heap_B=619775
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=1811822503
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=1821807915
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=1831793418
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=1841778921
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=1871481063
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=1881464443
+mem_heap_B=619775
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=1935706623
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=1945692035
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=detailed
+n9: 2208575 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1589248 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 1589248 0x4875F3D: vole_reconstruct (vole.c:178)
+   n1: 1589248 0x484F849: faest_verify (faest.c:393)
+    n1: 1589248 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+     n1: 1589248 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 1589248 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 55208 in 32 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+ n0: 31823 in 50 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+#-----------
+snapshot=60
+#-----------
+time=1955677538
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=1965663041
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=1995365183
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=2005348563
+mem_heap_B=619775
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=64
+#-----------
+time=2059590469
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=65
+#-----------
+time=2069575881
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=2079561384
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=67
+#-----------
+time=2089546887
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=68
+#-----------
+time=2119249029
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=69
+#-----------
+time=2129233508
+mem_heap_B=619327
+mem_heap_extra_B=62241
+mem_stacks_B=0
+heap_tree=detailed
+n9: 619327 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n6: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 20624 in 29 places, all below massif's threshold (1.00%)
+  n2: 16512 0x4C7B80C: OPENSSL_LH_new (lhash.c:59)
+   n1: 16128 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 16128 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 16128 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 16128 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 16128 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 16128 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 16128 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 16128 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 16128 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 16128 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 16128 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 16128 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 16128 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 16128 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 16128 0x484DA58: prg (aes.c:377)
+                  n1: 16128 0x487592B: vole_commit (vole.c:97)
+                   n1: 16128 0x484F045: faest_sign (faest.c:288)
+                    n1: 16128 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 16128 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 16128 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 16128 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 384 in 7 places, all below massif's threshold (1.00%)
+  n2: 9504 0x4C7B7ED: OPENSSL_LH_new (lhash.c:51)
+   n1: 9072 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 9072 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 9072 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 9072 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 9072 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 9072 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 9072 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 9072 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 9072 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 9072 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 9072 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 9072 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 9072 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 9072 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 9072 0x484DA58: prg (aes.c:377)
+                  n1: 9072 0x487592B: vole_commit (vole.c:97)
+                   n1: 9072 0x484F045: faest_sign (faest.c:288)
+                    n1: 9072 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 9072 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 9072 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 9072 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 432 in 7 places, all below massif's threshold (1.00%)
+  n2: 8568 0x4C8F891: CRYPTO_THREAD_lock_new (threads_pthread.c:50)
+   n1: 7056 0x4C5DB71: evp_cipher_new (evp_enc.c:1484)
+    n1: 7056 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+     n1: 7056 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+      n1: 7056 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+       n1: 7056 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 7056 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 7056 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 7056 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 7056 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 7056 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 7056 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 7056 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 7056 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 7056 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 7056 0x484DA58: prg (aes.c:377)
+                  n1: 7056 0x487592B: vole_commit (vole.c:97)
+                   n1: 7056 0x484F045: faest_sign (faest.c:288)
+                    n1: 7056 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 7056 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 7056 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 7056 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 1512 in 22 places, all below massif's threshold (1.00%)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n3: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n1: 8400 0x4C7DA95: UnknownInlinedFun (core_namemap.c:26)
+   n1: 8400 0x4C7DA95: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:266)
+    n0: 8400 in 2 places, all below massif's threshold (1.00%)
+  n0: 5880 in 6 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 20559 in 50 places, all below massif's threshold (1.00%)
+ n1: 11264 0x4C7BAD4: UnknownInlinedFun (lhash.c:224)
+  n2: 11264 0x4C7BAD4: OPENSSL_LH_insert (lhash.c:114)
+   n1: 8192 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+    n2: 8192 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+     n2: 8192 0x4C3721F: ERR_load_strings_const (err.c:302)
+      n1: 8192 0x4C89EAC: UnknownInlinedFun (ocsp_err.c:69)
+       n1: 8192 0x4C89EAC: UnknownInlinedFun (err_all.c:90)
+        n1: 8192 0x4C89EAC: UnknownInlinedFun (init.c:190)
+         n1: 8192 0x4C89EAC: ossl_init_load_crypto_strings_ossl_ (init.c:181)
+          n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+           n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+            n1: 8192 0x4C8B9F5: OPENSSL_init_crypto (init.c:549)
+             n1: 8192 0x4C38DD6: ossl_err_get_state_int (err.c:704)
+              n1: 8192 0x4C397AC: ERR_set_mark (err.c:882)
+               n1: 8192 0x4BE0D43: CONF_modules_load_file_ex (conf_mod.c:187)
+                n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:68)
+                 n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:44)
+                  n1: 8192 0x4C8AEB9: UnknownInlinedFun (init.c:249)
+                   n1: 8192 0x4C8AEB9: ossl_init_config_ossl_ (init.c:247)
+                    n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+                     n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+                      n1: 8192 0x4C8BC7C: OPENSSL_init_crypto (init.c:588)
+                       n1: 8192 0x4D6ED2E: ossl_engine_table_select.isra.0 (eng_table.c:208)
+                        n1: 8192 0x4C60709: evp_cipher_init_internal (evp_enc.c:133)
+                         n1: 8192 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                          n1: 8192 0x484DA58: prg (aes.c:377)
+                           n1: 8192 0x487592B: vole_commit (vole.c:97)
+                            n1: 8192 0x484F045: faest_sign (faest.c:288)
+                             n1: 8192 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                              n1: 8192 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                               n1: 8192 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                                n0: 8192 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 0 in 3 places, all below massif's threshold (1.00%)
+     n0: 0 in 2 places, all below massif's threshold (1.00%)
+   n0: 3072 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=70
+#-----------
+time=2183482024
+mem_heap_B=2208391
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=71
+#-----------
+time=2193467436
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=72
+#-----------
+time=2203452939
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=73
+#-----------
+time=2213438442
+mem_heap_B=2208575
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=74
+#-----------
+time=2243140584
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=75
+#-----------
+time=2275228676
+mem_heap_B=1413767
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=76
+#-----------
+time=2285214088
+mem_heap_B=1413951
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=77
+#-----------
+time=2305051762
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=78
+#-----------
+time=2337139980
+mem_heap_B=1413767
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=79
+#-----------
+time=2347125392
+mem_heap_B=1413951
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=detailed
+n9: 1413951 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 794624 0x48754D9: ConvertToVole (vole.c:26)
+  n1: 794624 0x4875F3D: vole_reconstruct (vole.c:178)
+   n1: 794624 0x484F849: faest_verify (faest.c:393)
+    n1: 794624 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+     n1: 794624 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 794624 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 131072 0x4875D3A: vole_reconstruct (vole.c:153)
+  n1: 131072 0x484F849: faest_verify (faest.c:393)
+   n1: 131072 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131072 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131072 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 131056 0x4875D0A: vole_reconstruct (vole.c:152)
+  n1: 131056 0x484F849: faest_verify (faest.c:393)
+   n1: 131056 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 131056 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 131056 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n4: 120872 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n0: 38696 in 31 places, all below massif's threshold (1.00%)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n2: 16512 0x4C7B80C: OPENSSL_LH_new (lhash.c:59)
+   n1: 16128 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 16128 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 16128 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 16128 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 16128 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 16128 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 16128 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 16128 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 16128 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 16128 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 16128 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 16128 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 16128 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 16128 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 16128 0x484DA58: prg (aes.c:377)
+                  n1: 16128 0x487592B: vole_commit (vole.c:97)
+                   n1: 16128 0x484F045: faest_sign (faest.c:288)
+                    n1: 16128 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 16128 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 16128 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 16128 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 384 in 7 places, all below massif's threshold (1.00%)
+ n1: 65536 0x4875C90: vole_reconstruct (vole.c:143)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 65536 0x4875D68: vole_reconstruct (vole.c:154)
+  n1: 65536 0x484F849: faest_verify (faest.c:393)
+   n1: 65536 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+    n1: 65536 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+     n0: 65536 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n2: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n1: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 32352 in 33 places, all below massif's threshold (1.00%)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n0: 14280 in 7 places, all below massif's threshold (1.00%)
+ n0: 31823 in 50 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F6F6: faest_verify (faest.c:380)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+#-----------
+snapshot=80
+#-----------
+time=2366963066
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=81
+#-----------
+time=2399051494
+mem_heap_B=1413767
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=82
+#-----------
+time=2409036906
+mem_heap_B=1413951
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=83
+#-----------
+time=2428874580
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=84
+#-----------
+time=2460962919
+mem_heap_B=1413767
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=85
+#-----------
+time=2470948331
+mem_heap_B=1413951
+mem_heap_extra_B=62249
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=86
+#-----------
+time=2490786005
+mem_heap_B=619143
+mem_heap_extra_B=62225
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=87
+#-----------
+time=2588243181
+mem_heap_B=226935
+mem_heap_extra_B=62193
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=88
+#-----------
+time=2705061543
+mem_heap_B=278839
+mem_heap_extra_B=62233
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=89
+#-----------
+time=2732306949
+mem_heap_B=225927
+mem_heap_extra_B=62193
+mem_stacks_B=0
+heap_tree=detailed
+n8: 225927 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n10: 120688 0x4C8446D: CRYPTO_zalloc (mem.c:197)
+  n1: 33408 0x4C8F7B3: UnknownInlinedFun (sparse_array.c:176)
+   n1: 33408 0x4C8F7B3: ossl_sa_set (sparse_array.c:205)
+    n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:97)
+     n1: 33408 0x4CB5A01: UnknownInlinedFun (property.c:286)
+      n1: 33408 0x4CB5A01: ossl_method_store_add (property.c:344)
+       n1: 33408 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+        n1: 33408 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+         n1: 33408 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+          n1: 33408 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+           n1: 33408 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+            n1: 33408 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+             n1: 33408 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+              n1: 33408 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+               n1: 33408 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+                n1: 33408 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                 n1: 33408 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                  n1: 33408 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                   n1: 33408 0x484DA58: prg (aes.c:377)
+                    n1: 33408 0x487592B: vole_commit (vole.c:97)
+                     n1: 33408 0x484F045: faest_sign (faest.c:288)
+                      n1: 33408 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                       n1: 33408 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                        n1: 33408 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                         n0: 33408 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n1: 32256 0x4C5DB63: evp_cipher_new (evp_enc.c:1481)
+   n1: 32256 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+    n1: 32256 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+     n1: 32256 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+      n1: 32256 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+       n1: 32256 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+        n1: 32256 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+         n1: 32256 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+          n1: 32256 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+           n1: 32256 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+            n1: 32256 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+             n1: 32256 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+              n1: 32256 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+               n1: 32256 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                n1: 32256 0x484DA58: prg (aes.c:377)
+                 n1: 32256 0x487592B: vole_commit (vole.c:97)
+                  n1: 32256 0x484F045: faest_sign (faest.c:288)
+                   n1: 32256 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                    n1: 32256 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                     n1: 32256 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                      n0: 32256 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+  n2: 16512 0x4C7B80C: OPENSSL_LH_new (lhash.c:59)
+   n1: 16128 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 16128 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 16128 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 16128 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 16128 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 16128 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 16128 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 16128 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 16128 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 16128 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 16128 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 16128 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 16128 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 16128 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 16128 0x484DA58: prg (aes.c:377)
+                  n1: 16128 0x487592B: vole_commit (vole.c:97)
+                   n1: 16128 0x484F045: faest_sign (faest.c:288)
+                    n1: 16128 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 16128 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 16128 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 16128 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 384 in 7 places, all below massif's threshold (1.00%)
+  n2: 9504 0x4C7B7ED: OPENSSL_LH_new (lhash.c:51)
+   n1: 9072 0x4CB59E5: UnknownInlinedFun (property.c:56)
+    n1: 9072 0x4CB59E5: ossl_method_store_add (property.c:341)
+     n1: 9072 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 9072 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 9072 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 9072 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 9072 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 9072 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 9072 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 9072 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 9072 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 9072 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 9072 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 9072 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 9072 0x484DA58: prg (aes.c:377)
+                  n1: 9072 0x487592B: vole_commit (vole.c:97)
+                   n1: 9072 0x484F045: faest_sign (faest.c:288)
+                    n1: 9072 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 9072 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 9072 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 9072 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 432 in 7 places, all below massif's threshold (1.00%)
+  n2: 8568 0x4C8F891: CRYPTO_THREAD_lock_new (threads_pthread.c:50)
+   n1: 7056 0x4C5DB71: evp_cipher_new (evp_enc.c:1484)
+    n1: 7056 0x4C6193D: evp_cipher_from_algorithm (evp_enc.c:1533)
+     n1: 7056 0x4C594CB: construct_evp_method.lto_priv.0 (evp_fetch.c:219)
+      n1: 7056 0x4C798A7: ossl_method_construct_this.lto_priv.0 (core_fetch.c:109)
+       n1: 7056 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 7056 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 7056 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 7056 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 7056 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 7056 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 7056 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 7056 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 7056 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 7056 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 7056 0x484DA58: prg (aes.c:377)
+                  n1: 7056 0x487592B: vole_commit (vole.c:97)
+                   n1: 7056 0x484F045: faest_sign (faest.c:288)
+                    n1: 7056 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 7056 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 7056 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 7056 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 1512 in 22 places, all below massif's threshold (1.00%)
+  n2: 5600 0x4C7DA5E: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:257)
+   n1: 4128 0x4C8321D: UnknownInlinedFun (core_namemap.c:287)
+    n1: 4128 0x4C8321D: ossl_namemap_add_name (core_namemap.c:292)
+     n0: 4128 in 7 places, all below massif's threshold (1.00%)
+   n0: 1472 in 1 place, below massif's threshold (1.00%)
+  n2: 4288 0x4CD4C0A: OPENSSL_sk_new_reserve (stack.c:228)
+   n1: 4032 0x4CB59C8: UnknownInlinedFun (property.c:47)
+    n1: 4032 0x4CB59C8: ossl_method_store_add (property.c:340)
+     n1: 4032 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+      n1: 4032 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+       n1: 4032 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+        n1: 4032 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+         n1: 4032 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+          n1: 4032 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+           n1: 4032 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+            n1: 4032 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+             n1: 4032 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+              n1: 4032 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+               n1: 4032 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                n1: 4032 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                 n1: 4032 0x484DA58: prg (aes.c:377)
+                  n1: 4032 0x487592B: vole_commit (vole.c:97)
+                   n1: 4032 0x484F045: faest_sign (faest.c:288)
+                    n1: 4032 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                     n1: 4032 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                      n1: 4032 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                       n0: 4032 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+   n0: 256 in 11 places, all below massif's threshold (1.00%)
+  n1: 4192 0x4CD301B: sk_reserve (stack.c:195)
+   n2: 4192 0x4CD3153: OPENSSL_sk_insert (stack.c:271)
+    n1: 4032 0x4CB5983: UnknownInlinedFun (property.c:47)
+     n1: 4032 0x4CB5983: ossl_method_store_add (property.c:357)
+      n1: 4032 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+       n1: 4032 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+        n1: 4032 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+         n1: 4032 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+          n1: 4032 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+           n1: 4032 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+            n1: 4032 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+             n1: 4032 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+              n1: 4032 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+               n1: 4032 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+                n1: 4032 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+                 n1: 4032 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                  n1: 4032 0x484DA58: prg (aes.c:377)
+                   n1: 4032 0x487592B: vole_commit (vole.c:97)
+                    n1: 4032 0x484F045: faest_sign (faest.c:288)
+                     n1: 4032 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                      n1: 4032 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                       n1: 4032 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                        n0: 4032 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 160 in 8 places, all below massif's threshold (1.00%)
+  n0: 3336 in 25 places, all below massif's threshold (1.00%)
+  n1: 3024 0x4CB59B6: ossl_method_store_add (property.c:339)
+   n1: 3024 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+    n1: 3024 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+     n1: 3024 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+      n1: 3024 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+       n1: 3024 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+        n1: 3024 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+         n1: 3024 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+          n1: 3024 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+           n1: 3024 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+            n1: 3024 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+             n1: 3024 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+              n1: 3024 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+               n1: 3024 0x484DA58: prg (aes.c:377)
+                n1: 3024 0x487592B: vole_commit (vole.c:97)
+                 n1: 3024 0x484F045: faest_sign (faest.c:288)
+                  n1: 3024 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                   n1: 3024 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                    n1: 3024 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                     n0: 3024 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n4: 48600 0x4C7BB26: OPENSSL_LH_insert (lhash.c:120)
+  n1: 34320 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+   n2: 34320 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+    n2: 32352 0x4C3721F: ERR_load_strings_const (err.c:302)
+     n0: 29376 in 32 places, all below massif's threshold (1.00%)
+     n1: 2976 0x4C89CCF: UnknownInlinedFun (provider_err.c:227)
+      n1: 2976 0x4C89CCF: UnknownInlinedFun (err_all.c:107)
+       n1: 2976 0x4C89CCF: UnknownInlinedFun (init.c:190)
+        n1: 2976 0x4C89CCF: ossl_init_load_crypto_strings_ossl_ (init.c:181)
+         n1: 2976 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+          n1: 2976 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+           n1: 2976 0x4C8B9F5: OPENSSL_init_crypto (init.c:549)
+            n1: 2976 0x4C38DD6: ossl_err_get_state_int (err.c:704)
+             n1: 2976 0x4C397AC: ERR_set_mark (err.c:882)
+              n1: 2976 0x4BE0D43: CONF_modules_load_file_ex (conf_mod.c:187)
+               n1: 2976 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:68)
+                n1: 2976 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:44)
+                 n1: 2976 0x4C8AEB9: UnknownInlinedFun (init.c:249)
+                  n1: 2976 0x4C8AEB9: ossl_init_config_ossl_ (init.c:247)
+                   n1: 2976 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+                    n1: 2976 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+                     n1: 2976 0x4C8BC7C: OPENSSL_init_crypto (init.c:588)
+                      n1: 2976 0x4D6ED2E: ossl_engine_table_select.isra.0 (eng_table.c:208)
+                       n1: 2976 0x4C60709: evp_cipher_init_internal (evp_enc.c:133)
+                        n1: 2976 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                         n1: 2976 0x484DA58: prg (aes.c:377)
+                          n1: 2976 0x487592B: vole_commit (vole.c:97)
+                           n1: 2976 0x484F045: faest_sign (faest.c:288)
+                            n1: 2976 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                             n1: 2976 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                              n1: 2976 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                               n0: 2976 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 1968 in 2 places, all below massif's threshold (1.00%)
+  n1: 8400 0x4C7DA95: UnknownInlinedFun (core_namemap.c:26)
+   n2: 8400 0x4C7DA95: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:266)
+    n1: 6192 0x4C8321D: UnknownInlinedFun (core_namemap.c:287)
+     n1: 6192 0x4C8321D: ossl_namemap_add_name (core_namemap.c:292)
+      n0: 6192 in 7 places, all below massif's threshold (1.00%)
+    n0: 2208 in 1 place, below massif's threshold (1.00%)
+  n1: 5616 0x4C9B933: UnknownInlinedFun (obj_local.h:12)
+   n2: 5616 0x4C9B933: OBJ_NAME_add (o_names.c:214)
+    n1: 3360 0x4C6A8A5: EVP_add_cipher (names.c:26)
+     n0: 3360 in 140 places, all below massif's threshold (1.00%)
+    n0: 2256 in 58 places, all below massif's threshold (1.00%)
+  n0: 264 in 5 places, all below massif's threshold (1.00%)
+ n1: 24832 0x484F8F6: faest_verify (faest.c:404)
+  n1: 24832 0x489F628: faest_em_128s_verify (faest_em_128s.c:100)
+   n1: 24832 0x1092E7: crypto_sign_open (in /home/degn/uni/faest/pqm4/faest/faest-test)
+    n0: 24832 0x109537: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n1: 11264 0x4C7BAD4: UnknownInlinedFun (lhash.c:224)
+  n2: 11264 0x4C7BAD4: OPENSSL_LH_insert (lhash.c:114)
+   n1: 8192 0x4D6D6E3: UnknownInlinedFun (err.c:265)
+    n2: 8192 0x4D6D6E3: err_load_strings.isra.0 (err.c:260)
+     n2: 8192 0x4C3721F: ERR_load_strings_const (err.c:302)
+      n1: 8192 0x4C89EAC: UnknownInlinedFun (ocsp_err.c:69)
+       n1: 8192 0x4C89EAC: UnknownInlinedFun (err_all.c:90)
+        n1: 8192 0x4C89EAC: UnknownInlinedFun (init.c:190)
+         n1: 8192 0x4C89EAC: ossl_init_load_crypto_strings_ossl_ (init.c:181)
+          n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+           n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+            n1: 8192 0x4C8B9F5: OPENSSL_init_crypto (init.c:549)
+             n1: 8192 0x4C38DD6: ossl_err_get_state_int (err.c:704)
+              n1: 8192 0x4C397AC: ERR_set_mark (err.c:882)
+               n1: 8192 0x4BE0D43: CONF_modules_load_file_ex (conf_mod.c:187)
+                n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:68)
+                 n1: 8192 0x4C8AEB9: UnknownInlinedFun (conf_sap.c:44)
+                  n1: 8192 0x4C8AEB9: UnknownInlinedFun (init.c:249)
+                   n1: 8192 0x4C8AEB9: ossl_init_config_ossl_ (init.c:247)
+                    n1: 8192 0x4976BBE: __pthread_once_slow (pthread_once.c:116)
+                     n1: 8192 0x4C8F97D: CRYPTO_THREAD_run_once (threads_pthread.c:154)
+                      n1: 8192 0x4C8BC7C: OPENSSL_init_crypto (init.c:588)
+                       n1: 8192 0x4D6ED2E: ossl_engine_table_select.isra.0 (eng_table.c:208)
+                        n1: 8192 0x4C60709: evp_cipher_init_internal (evp_enc.c:133)
+                         n1: 8192 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+                          n1: 8192 0x484DA58: prg (aes.c:377)
+                           n1: 8192 0x487592B: vole_commit (vole.c:97)
+                            n1: 8192 0x484F045: faest_sign (faest.c:288)
+                             n1: 8192 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                              n1: 8192 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                               n1: 8192 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                                n0: 8192 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+      n0: 0 in 3 places, all below massif's threshold (1.00%)
+     n0: 0 in 2 places, all below massif's threshold (1.00%)
+   n0: 3072 in 3 places, all below massif's threshold (1.00%)
+ n1: 5616 0x4C9B8E9: OBJ_NAME_add (o_names.c:200)
+  n0: 5616 in 215 places, all below massif's threshold (1.00%)
+ n2: 5496 0x4C8495B: CRYPTO_strdup (o_str.c:27)
+  n2: 5374 0x4C7DA77: namemap_add_name.part.0.lto_priv.0 (core_namemap.c:260)
+   n1: 4059 0x4C8321D: UnknownInlinedFun (core_namemap.c:287)
+    n1: 4059 0x4C8321D: ossl_namemap_add_name (core_namemap.c:292)
+     n0: 4059 in 7 places, all below massif's threshold (1.00%)
+   n0: 1315 in 1 place, below massif's threshold (1.00%)
+  n0: 122 in 9 places, all below massif's threshold (1.00%)
+ n1: 5040 0x4CB56C1: ossl_method_store_add (property.c:308)
+  n1: 5040 0x4C5F591: put_evp_method_in_store.lto_priv.0 (evp_fetch.c:190)
+   n1: 5040 0x4C798CD: ossl_method_construct_this.lto_priv.0 (core_fetch.c:123)
+    n1: 5040 0x4C7974F: UnknownInlinedFun (core_algorithm.c:77)
+     n1: 5040 0x4C7974F: algorithm_do_this.lto_priv.0 (core_algorithm.c:122)
+      n1: 5040 0x4C992FC: ossl_provider_doall_activated (provider_core.c:1423)
+       n1: 5040 0x4D63FB8: UnknownInlinedFun (core_algorithm.c:162)
+        n1: 5040 0x4D63FB8: ossl_method_construct.constprop.0 (core_fetch.c:153)
+         n1: 5040 0x4D648E4: inner_evp_generic_fetch.constprop.0 (evp_fetch.c:312)
+          n1: 5040 0x4C59911: UnknownInlinedFun (evp_fetch.c:364)
+           n1: 5040 0x4C59911: EVP_CIPHER_fetch (evp_enc.c:1677)
+            n1: 5040 0x4C60B1F: evp_cipher_init_internal (evp_enc.c:187)
+             n1: 5040 0x4C6101E: EVP_CipherInit_ex (evp_enc.c:417)
+              n1: 5040 0x484DA58: prg (aes.c:377)
+               n1: 5040 0x487592B: vole_commit (vole.c:97)
+                n1: 5040 0x484F045: faest_sign (faest.c:288)
+                 n1: 5040 0x489F4CC: faest_em_128s_sign_with_randomness (faest_em_128s.c:77)
+                  n1: 5040 0x489F58C: faest_em_128s_sign (faest_em_128s.c:91)
+                   n1: 5040 0x109270: crypto_sign (in /home/degn/uni/faest/pqm4/faest/faest-test)
+                    n0: 5040 0x109464: main (in /home/degn/uni/faest/pqm4/faest/faest-test)
+ n0: 4391 in 62 places, all below massif's threshold (1.00%)
