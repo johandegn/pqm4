@@ -63,49 +63,51 @@ static
   const unsigned int num_instances = 1 << depth;
   const unsigned int lambda_bytes  = lambda / 8;
 
-  // (depth + 1) x num_instances array of outLenBytes; but we only need to rows at a time
-  uint8_t* r = calloc(2 * num_instances, outLenBytes);
+  uint8_t* stack = calloc(depth+1, outLenBytes);
+  memset(v, 0, depth * outLenBytes);
+  unsigned int stack_index = 1;
 
-#define R(row, column) (r + (((row) % 2) * num_instances + (column)) * outLenBytes)
 #define V(idx) (v + (idx)*outLenBytes)
-
-  uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com = malloc(lambda_bytes * 2);
+#define STACK_PEAK(depth) (stack + (stack_index - 1 - depth) * outLenBytes)
 
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
+
+  uint8_t* sd = malloc(lambda_bytes);
+  uint8_t* com = malloc(lambda_bytes * 2);
 
   // Step: 2
   if (!sd0_bot) {
     get_sd_com(sVecCom, iv, lambda, 0, sd, com);
     H1_update(&h1_ctx, com, lambda_bytes * 2);
-    prg(sd, iv, R(0, 0), lambda, outLenBytes);
+    prg(sd, iv, stack, lambda, outLenBytes);
   }
 
+  unsigned int j;
   // Step: 3..4
   for (unsigned int i = 1; i < num_instances; i++) {
     get_sd_com(sVecCom, iv, lambda, i, sd, com);
     H1_update(&h1_ctx, com, lambda_bytes * 2);
-    prg(sd, iv, R(0, i), lambda, outLenBytes);
+    prg(sd, iv, STACK_PEAK(-1), lambda, outLenBytes);
+    stack_index++;
+
+    j = 0;
+    for (unsigned int x = i + 1; !(x & 1); x >>= 1) {
+      xor_u8_array(V(j), STACK_PEAK(0), V(j), outLenBytes);
+      ++j;
+      xor_u8_array(STACK_PEAK(0), STACK_PEAK(1), STACK_PEAK(1), outLenBytes);
+      stack_index--;
+    }
   }
   free(sd);
   free(com);
-  H1_final(&h1_ctx, h, lambda_bytes * 2);
-
-  // Step: 5..9
-  memset(v, 0, depth * outLenBytes);
-  for (unsigned int j = 0; j < depth; j++) {
-    unsigned int depthloop = num_instances >> (j + 1);
-    for (unsigned int i = 0; i < depthloop; i++) {
-      xor_u8_array(V(j), R(j, 2 * i + 1), V(j), outLenBytes);
-      xor_u8_array(R(j, 2 * i), R(j, 2 * i + 1), R(j + 1, i), outLenBytes);
-    }
-  }
+  
   // Step: 10
   if (!sd0_bot && u != NULL) {
-    memcpy(u, R(depth, 0), outLenBytes);
+    memcpy(u, stack, outLenBytes);
   }
-  free(r);
+  free(stack);
+  H1_final(&h1_ctx, h, lambda_bytes * 2);
 }
 
 int ChalDec(const uint8_t* chal, unsigned int i, unsigned int k0, unsigned int t0, unsigned int k1,
