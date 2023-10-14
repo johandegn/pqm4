@@ -390,7 +390,7 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
       pdec[i] = dsignature_pdec(sig, i, params);
       com[i]  = dsignature_com(sig, i, params);
     }
-    vole_reconstruct(dsignature_iv(sig, params), dsignature_chall_3(sig, params), pdec, com, hcom,
+    stream_vole_reconstruct(dsignature_iv(sig, params), dsignature_chall_3(sig, params), pdec, com, hcom,
                      qprime, ell_hat, params);
   }
 

@@ -57,9 +57,8 @@ static
 static
 #endif
     void
-    StreamToVole(const uint8_t* iv, stream_vec_com_t* sVecCom, bool sd0_bot, unsigned int lambda,
+    StreamToVole(const uint8_t* iv, stream_seeds_t stream_seeds, unsigned int depth, bool sd0_bot, unsigned int lambda,
                   unsigned int outLenBytes, uint8_t* u, uint8_t* v, uint8_t* h) {
-  const unsigned int depth = sVecCom->depth;
   const unsigned int num_instances = 1 << depth;
   const unsigned int lambda_bytes  = lambda / 8;
 
@@ -70,24 +69,26 @@ static
 #define V(idx) (v + (idx)*outLenBytes)
 #define STACK_PEAK(depth) (stack + (stack_index - 1 - depth) * outLenBytes)
 
-  H1_context_t h1_ctx;
-  H1_init(&h1_ctx, lambda);
 
   uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com = malloc(lambda_bytes * 2);
+  uint8_t* com = malloc(num_instances * lambda_bytes * 2);
 
   // Step: 2
   if (!sd0_bot) {
-    get_sd_com(sVecCom, iv, lambda, 0, sd, com);
-    H1_update(&h1_ctx, com, lambda_bytes * 2);
+    stream_sd_com(stream_seeds, iv, lambda, 0, sd, com);
+    //H1_update(&h1_ctx, com, lambda_bytes * 2);
     prg(sd, iv, stack, lambda, outLenBytes);
+  }
+  else {
+    //H1_update(&h1_ctx, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
+    memcpy(com, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
   }
 
   unsigned int j;
   // Step: 3..4
   for (unsigned int i = 1; i < num_instances; i++) {
-    get_sd_com(sVecCom, iv, lambda, i, sd, com);
-    H1_update(&h1_ctx, com, lambda_bytes * 2);
+    stream_sd_com(stream_seeds, iv, lambda, i, sd, com + i * lambda_bytes * 2);
+    //H1_update(&h1_ctx, com, lambda_bytes * 2);
     prg(sd, iv, STACK_PEAK(-1), lambda, outLenBytes);
     stack_index++;
 
@@ -100,14 +101,27 @@ static
     }
   }
   free(sd);
-  free(com);
   
   // Step: 10
   if (!sd0_bot && u != NULL) {
     memcpy(u, stack, outLenBytes);
   }
   free(stack);
+
+  H1_context_t h1_ctx;
+  H1_init(&h1_ctx, lambda);
+
+  for (unsigned int i = 0; i < num_instances; i++) {
+    unsigned int index = i;
+    if (stream_seeds.type == SVECCOMREC) {
+      index ^= NumRec(depth, stream_seeds.sVecComRec->b);
+    }
+    H1_update(&h1_ctx, com + index * lambda_bytes * 2, lambda_bytes * 2);
+  }
+  //printf("%d", 1 & *(com)); // FIXME: wrong hash for verify
+
   H1_final(&h1_ctx, h, lambda_bytes * 2);
+  free(com);
 }
 
 int ChalDec(const uint8_t* chal, unsigned int i, unsigned int k0, unsigned int t0, unsigned int k1,
@@ -207,16 +221,17 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
   H1_init(&h1_ctx, lambda);
   uint8_t* h = malloc(lambda_bytes * 2);
 
+  stream_seeds_t stream_seeds;
+  stream_seeds.type = SVECCOM;
   unsigned int v_idx = 0;
   for (unsigned int i = 0; i < tau; i++) {
     // Step 4
     unsigned int depth = i < tau0 ? k0 : k1;
-
+    stream_seeds.sVecCom = &sVecCom[i];
     // Step 5
-    //vector_commitment(expanded_keys + i * lambda_bytes, iv, params, lambda, &vecCom[i], depth);
-    stream_vector_commitment(expanded_keys + i * lambda_bytes, lambda, &sVecCom[i], depth);
+    stream_vector_commitment(expanded_keys + i * lambda_bytes, lambda, stream_seeds.sVecCom, depth);
     // Step 6
-    StreamToVole(iv, &sVecCom[i], false, lambda, ellhat_bytes, ui + i * ellhat_bytes,
+    StreamToVole(iv, stream_seeds, depth, false, lambda, ellhat_bytes, ui + i * ellhat_bytes,
                   v[v_idx], h);
     // Step 7 (and parts of 8)
     v_idx += depth;
@@ -292,6 +307,62 @@ void vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint8_t* co
   }
   vec_com_rec_clear(&vecComRec);
   free(sd);
+
+  // Step: 9
+  H1_final(&h1_ctx, hcom, lambda_bytes * 2);
+}
+
+void stream_vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint8_t* const* pdec,
+                             const uint8_t* const* com_j, uint8_t* hcom, uint8_t** q, unsigned int ellhat,
+                             const faest_paramset_t* params) {
+  unsigned int lambda       = params->faest_param.lambda;
+  unsigned int lambda_bytes = lambda / 8;
+  unsigned int ellhat_bytes = (ellhat + 7) / 8;
+  unsigned int tau          = params->faest_param.tau;
+  unsigned int tau0         = params->faest_param.t0;
+  unsigned int tau1         = params->faest_param.t1;
+  unsigned int k0           = params->faest_param.k0;
+  unsigned int k1           = params->faest_param.k1;
+
+  //uint8_t* sd = malloc((1 << MAX(k0, k1)) * lambda_bytes);
+  //memset(sd, 0, lambda_bytes);
+
+  // Step 9
+  H1_context_t h1_ctx;
+  H1_init(&h1_ctx, lambda);
+
+  stream_seeds_t stream_seeds;
+  stream_seeds.type = SVECCOMREC;
+
+  stream_vec_com_rec_t sVecComRec;
+  unsigned int max_depth = MAX(k0, k1);
+  sVecComRec.b = malloc(max_depth * sizeof(uint8_t));
+  sVecComRec.nodes = calloc(max_depth, lambda_bytes);
+  sVecComRec.com_j = malloc(lambda_bytes * 2);
+
+  uint8_t* h = malloc(lambda_bytes * 2);
+  // Step: 1
+  unsigned int q_idx = 0;
+  for (unsigned int i = 0; i < tau; i++) {
+    // Step: 2
+    unsigned int depth = i < tau0 ? k0 : k1;
+    stream_seeds.sVecComRec = &sVecComRec;
+    // Step 3
+    uint8_t chalout[MAX_DEPTH];
+    ChalDec(chall, i, k0, tau0, k1, tau1, chalout);
+
+    // Step 5
+    stream_vector_reconstruction(pdec[i], com_j[i], chalout, lambda, depth, &sVecComRec);
+
+    // Step: 7..8
+    StreamToVole(iv, stream_seeds, depth, true, lambda, ellhat_bytes, NULL, q[q_idx], h);
+    q_idx += depth;
+
+    // Step 9
+    H1_update(&h1_ctx, h, lambda_bytes * 2);
+  }
+  free(h);
+  stream_vec_com_rec_clear(&sVecComRec);
 
   // Step: 9
   H1_final(&h1_ctx, hcom, lambda_bytes * 2);
