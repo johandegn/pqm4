@@ -71,24 +71,34 @@ static
 
 
   uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com = malloc(num_instances * lambda_bytes * 2);
+  uint8_t* com;
+
+  H1_context_t h1_ctx;
+  H1_init(&h1_ctx, lambda);
 
   // Step: 2
   if (!sd0_bot) {
+    com = malloc(lambda_bytes * 2);
     stream_sd_com(stream_seeds, iv, lambda, 0, sd, com);
-    //H1_update(&h1_ctx, com, lambda_bytes * 2);
+    H1_update(&h1_ctx, com, lambda_bytes * 2);
     prg(sd, iv, stack, lambda, outLenBytes);
   }
   else {
-    //H1_update(&h1_ctx, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
+    com = malloc(num_instances * lambda_bytes * 2);
     memcpy(com, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
   }
 
   unsigned int j;
   // Step: 3..4
   for (unsigned int i = 1; i < num_instances; i++) {
-    stream_sd_com(stream_seeds, iv, lambda, i, sd, com + i * lambda_bytes * 2);
-    //H1_update(&h1_ctx, com, lambda_bytes * 2);
+    if (stream_seeds.type == SVECCOM) {
+      stream_sd_com(stream_seeds, iv, lambda, i, sd, com);
+      H1_update(&h1_ctx, com, lambda_bytes * 2);
+    }
+    else {
+      stream_sd_com(stream_seeds, iv, lambda, i, sd, com + i * lambda_bytes * 2);
+    }
+
     prg(sd, iv, STACK_PEAK(-1), lambda, outLenBytes);
     stack_index++;
 
@@ -108,17 +118,13 @@ static
   }
   free(stack);
 
-  H1_context_t h1_ctx;
-  H1_init(&h1_ctx, lambda);
 
-  for (unsigned int i = 0; i < num_instances; i++) {
-    unsigned int index = i;
-    if (stream_seeds.type == SVECCOMREC) {
-      index ^= NumRec(depth, stream_seeds.sVecComRec->b);
+  if (stream_seeds.type == SVECCOMREC) {
+    for (unsigned int i = 0; i < num_instances; i++) {
+      unsigned int index = i ^ NumRec(depth, stream_seeds.sVecComRec->b);
+      H1_update(&h1_ctx, com + index * lambda_bytes * 2, lambda_bytes * 2);
     }
-    H1_update(&h1_ctx, com + index * lambda_bytes * 2, lambda_bytes * 2);
   }
-  //printf("%d", 1 & *(com)); // FIXME: wrong hash for verify
 
   H1_final(&h1_ctx, h, lambda_bytes * 2);
   free(com);

@@ -246,7 +246,6 @@ static void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t
       }
     }
   }
-  //printf("Asdfasd:depth: %d  i: %d\n",depth, i);
   // NOTE: we could have reaced the unknown leaf if malformed signature
   memcpy(node, sVecComRec->nodes + lambdaBytes * i, lambdaBytes);
   ++i;
