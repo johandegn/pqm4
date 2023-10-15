@@ -71,32 +71,24 @@ static
 
 
   uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com;
+  uint8_t* com = malloc(lambda_bytes * 2);
 
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
 
   // Step: 2
   if (!sd0_bot) {
-    com = malloc(lambda_bytes * 2);
     stream_sd_com(stream_seeds, iv, lambda, 0, sd, com);
     H1_update(&h1_ctx, com, lambda_bytes * 2);
     prg(sd, iv, stack, lambda, outLenBytes);
-  }
-  else {
-    com = malloc(num_instances * lambda_bytes * 2);
-    memcpy(com, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
   }
 
   unsigned int j;
   // Step: 3..4
   for (unsigned int i = 1; i < num_instances; i++) {
+    stream_sd_com(stream_seeds, iv, lambda, i, sd, com);
     if (stream_seeds.type == SVECCOM) {
-      stream_sd_com(stream_seeds, iv, lambda, i, sd, com);
       H1_update(&h1_ctx, com, lambda_bytes * 2);
-    }
-    else {
-      stream_sd_com(stream_seeds, iv, lambda, i, sd, com + i * lambda_bytes * 2);
     }
 
     prg(sd, iv, STACK_PEAK(-1), lambda, outLenBytes);
@@ -110,7 +102,6 @@ static
       stack_index--;
     }
   }
-  free(sd);
   
   // Step: 10
   if (!sd0_bot && u != NULL) {
@@ -119,15 +110,24 @@ static
   free(stack);
 
 
+  // If reconstruction run through to compute h
   if (stream_seeds.type == SVECCOMREC) {
+    unsigned int offset = NumRec(depth, stream_seeds.sVecComRec->b);
     for (unsigned int i = 0; i < num_instances; i++) {
-      unsigned int index = i ^ NumRec(depth, stream_seeds.sVecComRec->b);
-      H1_update(&h1_ctx, com + index * lambda_bytes * 2, lambda_bytes * 2);
+      unsigned int index = i ^ offset;
+      if (index == 0) {
+        H1_update(&h1_ctx, stream_seeds.sVecComRec->com_j, lambda_bytes * 2);
+      }
+      else {
+        stream_sd_com(stream_seeds, iv, lambda, index, sd, com);
+        H1_update(&h1_ctx, com, lambda_bytes * 2);
+      }
     }
   }
+  free(sd);
+  free(com);
 
   H1_final(&h1_ctx, h, lambda_bytes * 2);
-  free(com);
 }
 
 int ChalDec(const uint8_t* chal, unsigned int i, unsigned int k0, unsigned int t0, unsigned int k1,
