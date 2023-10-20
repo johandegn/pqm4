@@ -20,18 +20,8 @@ typedef struct stream_vec_com_rec_t {
   uint32_t depth;
 } stream_vec_com_rec_t;
 
-typedef struct stream_seeds_t {
-  enum stream_seeds_type {SVECCOM, SVECCOMREC} type;
-  union {
-    stream_vec_com_t* sVecCom;
-    stream_vec_com_rec_t* sVecComRec;
-  };
-  
-} stream_seeds_t;
-
 unsigned int NumRec(unsigned int depth, const uint8_t* bi);
 
-void stream_sd_com(const stream_seeds_t stream_seeds, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
 void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
 void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
 

@@ -135,15 +135,6 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
   free(l_child);
 }
 
-void stream_sd_com(const stream_seeds_t stream_seeds, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
-  if (stream_seeds.type == SVECCOM) {
-    get_sd_com(stream_seeds.sVecCom, iv, lambda, index, sd, com);
-  }
-  else {
-    get_sd_com_rec(stream_seeds.sVecComRec, iv, lambda, index, sd, com);
-  }
-}
-
 void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth) {
   const unsigned int lambdaBytes = lambda / 8;
   //sVecCom->rootKey = malloc(lambdaBytes);
