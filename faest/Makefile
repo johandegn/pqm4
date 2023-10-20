@@ -30,4 +30,4 @@ clean: rm-files
 	$(RM) $(BINNAME)
 
 run: faest-test
-	@LD_LIBRARY_PATH='faest-ref/build' ./$(BINNAME)
+	@DYLD_LIBRARY_PATH='faest-ref/build' LD_LIBRARY_PATH='faest-ref/build' ./${BINNAME}
