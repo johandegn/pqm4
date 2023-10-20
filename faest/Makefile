@@ -1,7 +1,7 @@
 CC=gcc
 LDFLAGS=-Lfaest-ref/build -lfaest
 BINNAME=faest-test
-VARIANT=faest_em_128s
+VARIANT=faest_em_128f
 
 .PHONY: faest-test compile copy-files rm-files clean
 .SILENT: copy-files rm-files
