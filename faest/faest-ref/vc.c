@@ -33,7 +33,7 @@ static void get_children(const uint8_t* node, const uint8_t* iv, uint32_t lambda
 }
 
 // index is the index i for (sd_i, com_i)
-static void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
+void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
   const unsigned int lambdaBytes = lambda / 8;
 
   uint8_t* node = malloc(lambdaBytes);
@@ -71,7 +71,7 @@ static void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint3
   free(l_child);
 }
 
-static void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
+void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
   const unsigned int lambdaBytes = lambda / 8;
   const unsigned int depth = sVecComRec->depth;
   uint8_t* node = malloc(lambdaBytes);

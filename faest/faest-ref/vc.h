@@ -32,6 +32,9 @@ typedef struct stream_seeds_t {
 unsigned int NumRec(unsigned int depth, const uint8_t* bi);
 
 void stream_sd_com(const stream_seeds_t stream_seeds, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
+void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
+void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com);
+
 void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth);
 
 void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* cop,
