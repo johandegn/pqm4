@@ -45,7 +45,6 @@ void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lam
   size_t hi = leaf_count - 1;
   size_t center;
 
-  // NOTE: Recompute from beginning. Kinda slow. Use the memory later..
   for (size_t i = 0; i < sVecCom->depth; i++) {
     get_children(node, iv, lambda, l_child, r_child);
 
@@ -137,7 +136,6 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
 
 void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_vec_com_t* sVecCom, uint32_t depth) {
   const unsigned int lambdaBytes = lambda / 8;
-  //sVecCom->rootKey = malloc(lambdaBytes);
   memcpy(sVecCom->rootKey, rootKey, lambdaBytes);
   sVecCom->depth = depth;
 }

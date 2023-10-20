@@ -145,8 +145,8 @@ void StreamReconstructVole(const uint8_t* iv, stream_vec_com_rec_t* sVecComRec, 
 }
 
 void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int ellhat,
-                 const faest_paramset_t* params, uint8_t* hcom, stream_vec_com_t* sVecCom, uint8_t* c,
-                 uint8_t* u, uint8_t** v) {
+                        const faest_paramset_t* params, uint8_t* hcom, stream_vec_com_t* sVecCom, uint8_t* c,
+                        uint8_t* u, uint8_t** v) {
   unsigned int lambda       = params->faest_param.lambda;
   unsigned int lambda_bytes = lambda / 8;
   unsigned int ellhat_bytes = (ellhat + 7) / 8;
