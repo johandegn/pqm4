@@ -154,8 +154,7 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
   unsigned int tau0         = params->faest_param.t0;
   unsigned int k0           = params->faest_param.k0;
   unsigned int k1           = params->faest_param.k1;
-  hal_send_str("stream_vole_commit 1\n");
-  
+
   uint8_t* ui = malloc(tau * ellhat_bytes);
 
   // Step 1
@@ -166,13 +165,9 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
   uint8_t* h = malloc(lambda_bytes * 2);
-  hal_send_str("stream_vole_commit 2\n");
-  char buf[100];
 
   unsigned int v_idx = 0;
   for (unsigned int i = 0; i < tau; i++) {
-    sprintf(buf, "stream_vole_commit 3 [%d/%d]\n", i+1, tau);
-    hal_send_str(buf);
     // Step 4
     unsigned int depth = i < tau0 ? k0 : k1;
     // Step 5
@@ -219,14 +214,11 @@ void stream_vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint
   sVecComRec.b = malloc(max_depth * sizeof(uint8_t));
   sVecComRec.nodes = calloc(max_depth, lambda_bytes);
   sVecComRec.com_j = malloc(lambda_bytes * 2);
-  char buf[100];
 
   uint8_t* h = malloc(lambda_bytes * 2);
   // Step: 1
   unsigned int q_idx = 0;
   for (unsigned int i = 0; i < tau; i++) {
-    sprintf(buf, "stream_vole_reconstruct [%d/%d]\n", i+1, tau);
-    hal_send_str(buf);
     // Step: 2
     unsigned int depth = i < tau0 ? k0 : k1;
     // Step 3

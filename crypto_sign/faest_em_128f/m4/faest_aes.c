@@ -1908,13 +1908,12 @@ static void em_enc_forward_128_1(const uint8_t* z, const uint8_t* x, bf128_t* bf
   }
 }
 
-static void em_enc_forward_128_2(const bf128_t* bf_z, const uint8_t* x, const uint8_t* delta, bf128_t* bf_y,
+static void em_enc_forward_128_2(const bf128_t* bf_z, const uint8_t* x, const bf128_t bf_delta, bf128_t* bf_y,
                                const faest_paramset_t* params) {
   const unsigned int R   = params->faest_param.R;
   const unsigned int Nst = params->faest_param.Nwd;
 
-  const bf128_t bf_delta = bf128_load(delta);
-  bf128_t bf_x8i[8]; // = bf128_mul_bit(bf_delta, ptr_get_bit(x, i));
+  bf128_t bf_x8i[8];
 
   // Step: 2
   for (unsigned int j = 0; j < 4 * Nst; j++) {
@@ -2063,15 +2062,13 @@ static void em_enc_backward_128_1(const uint8_t* z, const uint8_t* x, const uint
 }
 
 static void em_enc_backward_128_2(const bf128_t* bf_z, const uint8_t* x, const bf128_t* bf_z_out,
-                                uint8_t Mtag, uint8_t Mkey, const uint8_t* delta, bf128_t* y_out,
+                                uint8_t Mtag, uint8_t Mkey, const bf128_t bf_delta, bf128_t* y_out,
                                 const faest_paramset_t* params) {
   const unsigned int lambda = params->faest_param.lambda;
   const unsigned int R      = params->faest_param.R;
   const unsigned int Nst    = params->faest_param.Nwd;
 
   // Step: 1
-  //const bf128_t bf_delta = delta ? bf128_load(delta) : bf128_zero();
-  const bf128_t bf_delta = bf128_load(delta);
   const bf128_t factor =
       bf128_mul_bit(bf128_add(bf128_mul_bit(bf_delta, Mkey), bf128_from_bit(1 ^ Mkey)), 1 ^ Mtag);
 
@@ -2171,26 +2168,19 @@ static void em_enc_constraints_128(const uint8_t* out, const uint8_t* x, const u
   //const unsigned int R      = params->faest_param.R;
 
   if (Mkey == 0) {
-    hal_send_str("em_enc_constraints_128 1a\n");
     // Step 6
     uint8_t* w_out = malloc(lambda / 8);
     xor_u8_array(out, w, w_out, lambda / 8);
-    hal_send_str("em_enc_constraints_128 2a\n");
 
     bf128_t* bf_s       = malloc(sizeof(bf128_t) * Senc);
-    hal_send_str("em_enc_constraints_128 2.1a\n");
     bf128_t* bf_vs      = malloc(sizeof(bf128_t) * Senc);
-    hal_send_str("em_enc_constraints_128 2.2a\n");
     bf128_t* bf_s_dash  = malloc(sizeof(bf128_t) * Senc);
-    hal_send_str("em_enc_constraints_128 2.3a\n");
     bf128_t* bf_vs_dash = malloc(sizeof(bf128_t) * Senc);
-    hal_send_str("em_enc_constraints_128 2.4a\n");
     em_enc_forward_128_1(w, x, bf_s, params);
     em_enc_forward_128(bf_v, NULL, bf_vs, params);
-    hal_send_str("em_enc_constraints_128 3a\n");
     em_enc_backward_128_1(w, x, w_out, 0, 0, bf_s_dash, params);
     em_enc_backward_128(bf_v, NULL, bf_v, 1, 0, NULL, bf_vs_dash, params);
-    hal_send_str("em_enc_constraints_128 4a\n");
+
     for (unsigned int j = 0; j < Senc; j++) {
       A0[j] = bf128_mul(bf_vs[j], bf_vs_dash[j]);
       A1[j] = bf128_add(
@@ -2198,49 +2188,32 @@ static void em_enc_constraints_128(const uint8_t* out, const uint8_t* x, const u
                     A0[j]),
           bf128_one());
     }
-    hal_send_str("em_enc_constraints_128 5a\n");
     free(bf_vs_dash);
     free(bf_s_dash);
     free(bf_vs);
     free(bf_s);
     free(w_out);
   } else {
-    hal_send_str("em_enc_constraints_128 1b\n"); // NOTE: we get stuck here. probably out of memory...
     // Step: 18, 19
-    // TODO: compute these on demand in em_enc_backward_128
     const bf128_t bf_delta = bf128_load(delta);
-    /*
-    bf128_t* bf_x          = malloc(sizeof(bf128_t) * 128 * (R + 1));
-    hal_send_str("em_enc_constraints_128 1.1b\n");
-    for (unsigned int i = 0; i < 128 * (R + 1); i++) {
-      bf_x[i] = bf128_mul_bit(bf_delta, ptr_get_bit(x, i));
-    }
-    hal_send_str("em_enc_constraints_128 2b\n");
-    */
-
 
     // Step 21
     bf128_t* bf_q_out = malloc(sizeof(bf128_t) * lambda);
     for (unsigned int i = 0; i < lambda; i++) {
       bf_q_out[i] = bf128_add(bf128_mul_bit(bf_delta, ptr_get_bit(out, i)), bf_q[i]);
     }
-    hal_send_str("em_enc_constraints_128 3b\n");
-
 
     bf128_t* bf_qs      = malloc(sizeof(bf128_t) * Senc);
     bf128_t* bf_qs_dash = malloc(sizeof(bf128_t) * Senc);
-    em_enc_forward_128_2(bf_q, x, delta, bf_qs, params);
-    em_enc_backward_128_2(bf_q, x, bf_q_out, 0, 1, delta, bf_qs_dash, params);
+    em_enc_forward_128_2(bf_q, x, bf_delta, bf_qs, params);
+    em_enc_backward_128_2(bf_q, x, bf_q_out, 0, 1, bf_delta, bf_qs_dash, params);
     free(bf_q_out);
-    hal_send_str("em_enc_constraints_128 4b\n");
 
     // Step: 13..14
     bf128_t minus_part = bf128_mul(bf_delta, bf_delta);
     for (unsigned int j = 0; j < Senc; j++) {
       B[j] = bf128_add(bf128_mul(bf_qs[j], bf_qs_dash[j]), minus_part);
     }
-    hal_send_str("em_enc_constraints_128 5b\n");
-
     free(bf_qs);
     free(bf_qs_dash);
     //free(bf_x);
@@ -2301,7 +2274,6 @@ static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   const unsigned int R           = params->faest_param.R;
   const unsigned int Senc        = params->faest_param.Senc;
   const unsigned int lambdaBytes = lambda / 8;
-  hal_send_str("em_verify_128 1\n");
 
   const uint8_t* delta = chall_3;
 
@@ -2315,17 +2287,13 @@ static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chal
       }
     }
   }
-  hal_send_str("em_verify_128 2\n");
 
   bf128_t* bf_q = column_to_row_major_and_shrink_V_128(Q, Lenc);
-  hal_send_str("em_verify_128 3\n");
 
   // copy expanded key in to an array
   uint8_t* x = malloc(lambda * (R + 1) / 8);
   // for scan-build
   assert(lambda * (R + 1) / 8 == sizeof(aes_word_t) * params->faest_param.Nwd * (R + 1));
-  hal_send_str("em_verify_128 4\n");
-
   {
     aes_round_keys_t round_keys;
     aes128_init_round_keys(&round_keys, in);
@@ -2337,28 +2305,22 @@ static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chal
       }
     }
   }
-  hal_send_str("em_verify_128 5\n");
 
   const unsigned int length_b = Senc + 1;
   bf128_t* B                  = malloc(sizeof(bf128_t) * length_b);
-  hal_send_str("em_verify_128 6\n");
 
   em_enc_constraints_128(out, x, NULL, NULL, 1, bf_q, delta, NULL, NULL, B, params);
   free(x);
-  hal_send_str("em_verify_128 7\n");
 
   B[length_b - 1] = bf128_sum_poly(bf_q + Lenc);
   free(bf_q);
-  hal_send_str("em_verify_128 8\n");
 
   uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_128(q_tilde, chall_2, B, length_b - 1);
   free(B);
-  hal_send_str("em_verify_128 9\n");
 
   bf128_t bf_qtilde = bf128_load(q_tilde);
   bf128_store(q_tilde, bf128_add(bf_qtilde, bf128_mul(bf128_load(a_tilde), bf128_load(delta))));
-  hal_send_str("em_verify_128 10\n");
 
   return q_tilde;
 }

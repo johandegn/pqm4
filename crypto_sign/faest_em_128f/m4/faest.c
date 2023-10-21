@@ -224,24 +224,26 @@ static void hash_challenge_2(uint8_t* chall_2, const uint8_t* chall_1, const uin
   const unsigned int lambda_bytes  = lambda / 8;
   const unsigned int ell_bytes     = ell / 8;
   const unsigned int u_tilde_bytes = lambda_bytes + UNIVERSAL_HASH_B;
-  hal_send_str("hash_challenge_2 1\n");
-  char buf[100];
 
   H2_context_t h2_ctx_1;
   H2_init(&h2_ctx_1, lambda);
-  hal_send_str("hash_challenge_2 2\n");
   H2_update(&h2_ctx_1, chall_1, 5 * lambda_bytes + 8);
-  hal_send_str("hash_challenge_2 3\n");
   H2_update(&h2_ctx_1, u_tilde, u_tilde_bytes);
-  sprintf(buf, "hash_challenge_2 4 [size: %ld]\n", 2 * lambda_bytes); hal_send_str(buf);
   H2_update(&h2_ctx_1, h_v, 2 * lambda_bytes);
-  sprintf(buf, "hash_challenge_2 5 [size: %ld]\n", ell_bytes); hal_send_str(buf);
-  H2_update(&h2_ctx_1, d, ell_bytes/2);
-  hal_send_str("hash_challenge_2 5.1\n");
-  H2_update(&h2_ctx_1, d + ell_bytes/2, ell_bytes/2);
-  hal_send_str("hash_challenge_2 6\n");
+
+  //H2_update(&h2_ctx_1, d, ell_bytes/2);
+  //H2_update(&h2_ctx_1, d + ell_bytes/2, ell_bytes/2);
+  unsigned int chunk_bytes = 16;
+  unsigned int chunks = ell_bytes / chunk_bytes; 
+  for (unsigned int i = 0; i < chunks; i++){
+    H2_update(&h2_ctx_1, d + i * chunk_bytes, chunk_bytes);
+  }
+  unsigned int remaining_bytes = ell_bytes - chunk_bytes * chunks;
+  if (remaining_bytes != 0) {
+    H2_update(&h2_ctx_1, d + ell_bytes - remaining_bytes, remaining_bytes);
+  }
+
   H2_final(&h2_ctx_1, chall_2, 3 * lambda_bytes + 8);
-  hal_send_str("hash_challenge_2 7\n");
 }
 
 static void hash_challenge_3(uint8_t* chall_3, const uint8_t* chall_2, const uint8_t* a_tilde,
@@ -267,7 +269,7 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   const unsigned int tau0          = params->faest_param.t0;
   const unsigned int ell_hat       = l + lambda * 2 + UNIVERSAL_HASH_B_BITS;
   const unsigned int ell_hat_bytes = ell_hat / 8;
-  hal_send_str("faest_sign 1\n");
+
   // Step: 2
   uint8_t mu[MAX_LAMBDA_BYTES * 2];
   hash_mu(mu, owf_input, owf_output, params->faest_param.pkSize / 2, msg, msglen, lambda);
@@ -284,7 +286,6 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
     }
     H3_final(&h3_ctx, rootkey, lambdaBytes, signature_iv(sig, params));
   }
-  hal_send_str("faest_sign 2\n");
 
   // Step: 3
   uint8_t hcom[MAX_LAMBDA_BYTES * 2];
@@ -296,8 +297,6 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   for (unsigned int i = 1; i < lambda; ++i) {
     V[i] = V[0] + i * ell_hat_bytes;
   }
-  hal_send_str("faest_sign 3\n");
-
   stream_vole_commit(rootkey, signature_iv(sig, params), ell_hat, params, hcom, sVecCom,
               signature_c(sig, 0, params), u, V);
 
@@ -305,11 +304,9 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   uint8_t chall_1[(5 * MAX_LAMBDA_BYTES) + 8];
   hash_challenge_1(chall_1, mu, hcom, signature_c(sig, 0, params), signature_iv(sig, params),
                    lambda, l, tau);
-  hal_send_str("faest_sign 4\n");
 
   // Step: 6
   vole_hash(signature_u_tilde(sig, params), chall_1, u, l, lambda);
-  hal_send_str("faest_sign 5\n");
 
   // Step: 7 and 8
   uint8_t h_v[MAX_LAMBDA_BYTES * 2];
@@ -327,21 +324,15 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
     // Step: 8
     H1_final(&h1_ctx_1, h_v, lambdaBytes * 2);
   }
-  hal_send_str("faest_sign 6\n");
-
   // Step: 9, 10
   uint8_t* w = aes_extend_witness(owf_key, owf_input, params);
-  hal_send_str("faest_sign 6.1\n");
-
   // Step: 11
   xor_u8_array(w, u, signature_d(sig, params), ell_bytes);
 
-  hal_send_str("faest_sign 6.2\n");
   // Step: 12
   uint8_t chall_2[3 * MAX_LAMBDA_BYTES + 8];
   hash_challenge_2(chall_2, chall_1, signature_u_tilde(sig, params), h_v, signature_d(sig, params),
                    lambda, l);
-  hal_send_str("faest_sign 7\n");
 
   // Step: 14..15
   // transpose is computed in aes_prove
@@ -357,7 +348,6 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   w = NULL;
   free(u);
   u = NULL;
-  hal_send_str("faest_sign 8\n");
 
   // Step: 17
   hash_challenge_3(signature_chall_3(sig, params), chall_2, signature_a_tilde(sig, params), b_tilde,
@@ -374,8 +364,6 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
     stream_vector_open(&sVecCom[i], s_, signature_pdec(sig, i, params),
                 signature_com(sig, i, params), depth, signature_iv(sig, params), lambda);
   }
-  hal_send_str("faest_sign 9\n");
-
   free(sVecCom);
   sVecCom = NULL;
 }
@@ -392,12 +380,10 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   const unsigned int utilde_bytes  = lambdaBytes + UNIVERSAL_HASH_B;
   const unsigned int k0            = params->faest_param.k0;
   const unsigned int k1            = params->faest_param.k1;
-  hal_send_str("faest_verify 1\n");
 
   // Step: 3
   uint8_t mu[MAX_LAMBDA_BYTES * 2];
   hash_mu(mu, owf_input, owf_output, params->faest_param.pkSize / 2, msg, msglen, lambda);
-  hal_send_str("faest_verify 2\n");
 
   // Step: 5
   // q prime is a \hat \ell \times \lambda matrix
@@ -406,8 +392,6 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   for (unsigned int i = 1; i < lambda; ++i) {
     qprime[i] = qprime[0] + i * ell_hat_bytes;
   }
-  hal_send_str("faest_verify 3\n");
-
   uint8_t hcom[MAX_LAMBDA_BYTES * 2];
   {
     // TODO: change vole_reconstruct interface to make this less ugly
@@ -417,17 +401,14 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
       pdec[i] = dsignature_pdec(sig, i, params);
       com[i]  = dsignature_com(sig, i, params);
     }
-
     stream_vole_reconstruct(dsignature_iv(sig, params), dsignature_chall_3(sig, params), pdec, com, hcom,
                      qprime, ell_hat, params);
   }
-  hal_send_str("faest_verify 4\n");
 
   // Step: 5
   uint8_t chall_1[(5 * MAX_LAMBDA_BYTES) + 8];
   hash_challenge_1(chall_1, mu, hcom, dsignature_c(sig, 0, params), dsignature_iv(sig, params),
                    lambda, l, tau);
-  hal_send_str("faest_verify 5\n");
 
   // Step: 8..14
   uint8_t** q = malloc(lambda * sizeof(uint8_t*));
@@ -441,7 +422,6 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   for (unsigned int i = 1; i < lambda; ++i) {
     Dtilde[i] = Dtilde[0] + i * (lambdaBytes + UNIVERSAL_HASH_B);
   }
-  hal_send_str("faest_verify 6\n");
 
   unsigned int Dtilde_idx = 0;
   unsigned int q_idx      = 0;
@@ -475,7 +455,7 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   free(qprime[0]);
   free(qprime);
   qprime = NULL;
-  hal_send_str("faest_verify 7\n");
+
   // Step 15 and 16
   uint8_t h_v[MAX_LAMBDA_BYTES * 2];
   {
@@ -496,13 +476,11 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   free(Dtilde[0]);
   free(Dtilde);
   Dtilde = NULL;
-  hal_send_str("faest_verify 8\n");
 
   // Step 17
   uint8_t chall_2[3 * MAX_LAMBDA_BYTES + 8];
   hash_challenge_2(chall_2, chall_1, dsignature_u_tilde(sig, params), h_v,
                    dsignature_d(sig, params), lambda, l);
-  hal_send_str("faest_verify 9\n");
 
   // Step 18
   uint8_t* b_tilde =
@@ -511,14 +489,12 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
   free(q[0]);
   free(q);
   q = NULL;
-  hal_send_str("faest_verify 10\n");
 
   // Step: 20
   uint8_t chall_3[MAX_LAMBDA_BYTES];
   hash_challenge_3(chall_3, chall_2, dsignature_a_tilde(sig, params), b_tilde, lambda);
   free(b_tilde);
   b_tilde = NULL;
-  hal_send_str("faest_verify 11\n");
 
   // Step 21
   return memcmp(chall_3, dsignature_chall_3(sig, params), lambdaBytes) == 0 ? 0 : -1;
