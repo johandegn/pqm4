@@ -231,8 +231,6 @@ static void hash_challenge_2(uint8_t* chall_2, const uint8_t* chall_1, const uin
   H2_update(&h2_ctx_1, u_tilde, u_tilde_bytes);
   H2_update(&h2_ctx_1, h_v, 2 * lambda_bytes);
 
-  //H2_update(&h2_ctx_1, d, ell_bytes/2);
-  //H2_update(&h2_ctx_1, d + ell_bytes/2, ell_bytes/2);
   unsigned int chunk_bytes = 16;
   unsigned int chunks = ell_bytes / chunk_bytes; 
   for (unsigned int i = 0; i < chunks; i++){
