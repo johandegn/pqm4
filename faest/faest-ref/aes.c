@@ -152,7 +152,7 @@ static void rot_word(bf8_t* words) {
   words[3]  = tmp;
 }
 
-int expand_key(aes_round_keys_t* round_keys, const uint8_t* key, unsigned int key_words,
+static int expand_key(aes_round_keys_t* round_keys, const uint8_t* key, unsigned int key_words,
                unsigned int block_words, unsigned int num_rounds) {
   int ret = 0;
 
@@ -300,62 +300,37 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   memcpy(internal_iv, iv, sizeof(internal_iv));
 
   aes_round_keys_t round_key;
+  int rounds;
 
   switch (seclvl) {
   case 256:
     aes256_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_256);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_256);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
+    rounds = ROUNDS_256;
     return;
   case 192:
     aes192_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_192);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_192);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
+      rounds = ROUNDS_192;
     return;
   default:
     aes128_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_128);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_128);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
+    rounds = ROUNDS_128;
     return;
+  }
+
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(out, state, AES_BLOCK_WORDS);
+    aes_increment_iv(internal_iv);
+  }
+  if (outlen) {
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    uint8_t tmp[16];
+    store_state(tmp, state, AES_BLOCK_WORDS);
+    memcpy(out, tmp, outlen);
   }
 #else
   const EVP_CIPHER* cipher;
