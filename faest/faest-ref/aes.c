@@ -306,15 +306,15 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   case 256:
     aes256_init_round_keys(&round_key, key);
     rounds = ROUNDS_256;
-    return;
+    break;
   case 192:
     aes192_init_round_keys(&round_key, key);
-      rounds = ROUNDS_192;
-    return;
+    rounds = ROUNDS_192;
+    break;
   default:
     aes128_init_round_keys(&round_key, key);
     rounds = ROUNDS_128;
-    return;
+    break;
   }
 
   for (; outlen >= 16; outlen -= 16, out += 16) {

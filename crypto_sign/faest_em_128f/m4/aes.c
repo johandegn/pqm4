@@ -306,7 +306,7 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   switch (seclvl) {
   default:
     aes128_ctr_keyexp_publicinputs((aes128ctx_publicinputs *) &round_key, key);
-    return;
+    break;
   }
   #else
   int rounds;
@@ -314,15 +314,15 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   case 256:
     aes256_init_round_keys(&round_key, key);
     rounds = ROUNDS_256;
-    return;
+    break;
   case 192:
     aes192_init_round_keys(&round_key, key);
       rounds = ROUNDS_192;
-    return;
+    break;
   default:
     aes128_init_round_keys(&round_key, key);
     rounds = ROUNDS_128;
-    return;
+    break;
   }
   #endif
 
