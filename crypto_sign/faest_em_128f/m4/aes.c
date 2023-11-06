@@ -339,6 +339,18 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
     }
     return;
   default:
+    #if defined(PQCLEAN)
+    aes128_ctr_keyexp_publicinputs((aes128ctx_publicinputs *) &round_key, key);
+    for (; outlen >= 16; outlen -= 16, out += 16) {
+      aes128_ctr_publicinputs(out, 16, iv, (aes128ctx_publicinputs *) &round_key);
+      aes_increment_iv(internal_iv);
+    }
+    if (outlen) {
+      uint8_t tmp[16];
+      aes128_ctr_publicinputs(tmp, 16, iv, (aes128ctx_publicinputs *) &round_key);
+      memcpy(out, tmp, outlen);
+    }
+    #else
     aes128_init_round_keys(&round_key, key);
     for (; outlen >= 16; outlen -= 16, out += 16) {
       aes_block_t state;
@@ -355,6 +367,7 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
       store_state(tmp, state, AES_BLOCK_WORDS);
       memcpy(out, tmp, outlen);
     }
+    #endif
     return;
   }
 #else
