@@ -152,7 +152,7 @@ static void rot_word(bf8_t* words) {
   words[3]  = tmp;
 }
 
-int expand_key(aes_round_keys_t* round_keys, const uint8_t* key, unsigned int key_words,
+static int expand_key(aes_round_keys_t* round_keys, const uint8_t* key, unsigned int key_words,
                unsigned int block_words, unsigned int num_rounds) {
   int ret = 0;
 
@@ -301,74 +301,54 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
 
   aes_round_keys_t round_key;
 
+  // NOTE only implemented for 128 in pqclean
+  #if defined(PQCLEAN)
+  switch (seclvl) {
+  default:
+    aes128_ctr_keyexp_publicinputs((aes128ctx_publicinputs *) &round_key, key);
+    return;
+  }
+  #else
+  int rounds;
   switch (seclvl) {
   case 256:
     aes256_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_256);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_256);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
+    rounds = ROUNDS_256;
     return;
   case 192:
     aes192_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_192);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_192);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
+      rounds = ROUNDS_192;
     return;
   default:
-    #if defined(PQCLEAN)
-    aes128_ctr_keyexp_publicinputs((aes128ctx_publicinputs *) &round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes128_ctr_publicinputs(out, 16, iv, (aes128ctx_publicinputs *) &round_key);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      uint8_t tmp[16];
-      aes128_ctr_publicinputs(tmp, 16, iv, (aes128ctx_publicinputs *) &round_key);
-      memcpy(out, tmp, outlen);
-    }
-    #else
     aes128_init_round_keys(&round_key, key);
-    for (; outlen >= 16; outlen -= 16, out += 16) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_128);
-      store_state(out, state, AES_BLOCK_WORDS);
-      aes_increment_iv(internal_iv);
-    }
-    if (outlen) {
-      aes_block_t state;
-      load_state(state, internal_iv, AES_BLOCK_WORDS);
-      aes_encrypt(&round_key, state, AES_BLOCK_WORDS, ROUNDS_128);
-      uint8_t tmp[16];
-      store_state(tmp, state, AES_BLOCK_WORDS);
-      memcpy(out, tmp, outlen);
-    }
-    #endif
+    rounds = ROUNDS_128;
     return;
+  }
+  #endif
+
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    #if defined(PQCLEAN)
+    aes128_ctr_publicinputs(out, 16, iv, (aes128ctx_publicinputs *) &round_key);
+    aes_increment_iv(internal_iv);
+    #else
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(out, state, AES_BLOCK_WORDS);
+    aes_increment_iv(internal_iv);
+    #endif
+  }
+  if (outlen) {
+    uint8_t tmp[16];
+    #if defined(PQCLEAN)
+    aes128_ctr_publicinputs(tmp, 16, iv, (aes128ctx_publicinputs *) &round_key);
+    #else
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(tmp, state, AES_BLOCK_WORDS);
+    #endif
+    memcpy(out, tmp, outlen);
   }
 #else
   const EVP_CIPHER* cipher;
