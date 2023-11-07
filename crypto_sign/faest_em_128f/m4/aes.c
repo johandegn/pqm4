@@ -326,28 +326,29 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   }
   #endif
 
+  // FIXME: not sure if this is right
+  unsigned char zero[16] = {0};
   for (; outlen >= 16; outlen -= 16, out += 16) {
-    #if defined(PQCLEAN)
-    aes128_ctr_publicinputs(out, 16, iv, (aes128ctx_publicinputs *) &round_key);
-    aes_increment_iv(internal_iv);
-    #else
     aes_block_t state;
     load_state(state, internal_iv, AES_BLOCK_WORDS);
+    #if defined(PQCLEAN)
+    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
+    #else
     aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    #endif
     store_state(out, state, AES_BLOCK_WORDS);
     aes_increment_iv(internal_iv);
-    #endif
   }
   if (outlen) {
     uint8_t tmp[16];
-    #if defined(PQCLEAN)
-    aes128_ctr_publicinputs(tmp, 16, iv, (aes128ctx_publicinputs *) &round_key);
-    #else
     aes_block_t state;
     load_state(state, internal_iv, AES_BLOCK_WORDS);
+    #if defined(PQCLEAN)
+    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
+    #else
     aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
-    store_state(tmp, state, AES_BLOCK_WORDS);
     #endif
+    store_state(tmp, state, AES_BLOCK_WORDS);
     memcpy(out, tmp, outlen);
   }
 #else
