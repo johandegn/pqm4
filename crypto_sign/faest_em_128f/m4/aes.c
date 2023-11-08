@@ -332,7 +332,7 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
     aes_block_t state;
     load_state(state, internal_iv, AES_BLOCK_WORDS);
     #if defined(PQCLEAN)
-    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
+    aes128_ctr_publicinputs(zero, 16, (unsigned char *) state, (aes128ctx_publicinputs *) &round_key);
     #else
     aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
     #endif
@@ -344,7 +344,7 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
     aes_block_t state;
     load_state(state, internal_iv, AES_BLOCK_WORDS);
     #if defined(PQCLEAN)
-    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
+    aes128_ctr_publicinputs(zero, 16, (unsigned char *) state, (aes128ctx_publicinputs *) &round_key);
     #else
     aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
     #endif
