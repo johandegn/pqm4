@@ -12,6 +12,10 @@
 #include "compat.h"
 #include "utils.h"
 
+#if defined(PQCLEAN)
+#include "aes-publicinputs.h"
+#endif
+
 #if defined(HAVE_OPENSSL)
 #include <openssl/evp.h>
 #endif
@@ -295,63 +299,7 @@ int rijndael256_encrypt_block(const aes_round_keys_t* key, const uint8_t* plaint
 }
 
 void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclvl, size_t outlen) {
-#if !defined(HAVE_OPENSSL)
-  uint8_t internal_iv[16];
-  memcpy(internal_iv, iv, sizeof(internal_iv));
-
-  aes_round_keys_t round_key;
-
-  // NOTE only implemented for 128 in pqclean
-  #if defined(PQCLEAN)
-  switch (seclvl) {
-  default:
-    aes128_ctr_keyexp_publicinputs((aes128ctx_publicinputs *) &round_key, key);
-    break;
-  }
-  #else
-  int rounds;
-  switch (seclvl) {
-  case 256:
-    aes256_init_round_keys(&round_key, key);
-    rounds = ROUNDS_256;
-    break;
-  case 192:
-    aes192_init_round_keys(&round_key, key);
-      rounds = ROUNDS_192;
-    break;
-  default:
-    aes128_init_round_keys(&round_key, key);
-    rounds = ROUNDS_128;
-    break;
-  }
-  #endif
-
-  // FIXME: not sure if this is right
-  unsigned char zero[16] = {0};
-  for (; outlen >= 16; outlen -= 16, out += 16) {
-    aes_block_t state;
-    load_state(state, internal_iv, AES_BLOCK_WORDS);
-    #if defined(PQCLEAN)
-    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
-    #else
-    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
-    #endif
-    store_state(out, state, AES_BLOCK_WORDS);
-    aes_increment_iv(internal_iv);
-  }
-  if (outlen) {
-    uint8_t tmp[16];
-    aes_block_t state;
-    load_state(state, internal_iv, AES_BLOCK_WORDS);
-    #if defined(PQCLEAN)
-    aes128_ctr_publicinputs((unsigned char *) state, 16, zero, (aes128ctx_publicinputs *) &round_key);
-    #else
-    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
-    #endif
-    store_state(tmp, state, AES_BLOCK_WORDS);
-    memcpy(out, tmp, outlen);
-  }
-#else
+#if defined(HAVE_OPENSSL)
   const EVP_CIPHER* cipher;
   switch (seclvl) {
   case 256:
@@ -381,6 +329,68 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   }
   EVP_EncryptFinal_ex(ctx, out, &len);
   EVP_CIPHER_CTX_free(ctx);
+#elif defined(PQCLEAN)
+  uint8_t internal_iv[16];
+  memcpy(internal_iv, iv, sizeof(internal_iv));
+
+  aes128ctx_publicinputs ctx;
+
+  // NOTE only implemented for 128
+  switch (seclvl) {
+  default:
+    aes128_ctr_keyexp_publicinputs(&ctx, key);
+    break;
+  }
+
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    memset(out, 0, 16);
+    aes128_ctr_publicinputs(out, 16, internal_iv, &ctx);
+    aes_increment_iv(internal_iv);
+  }
+  if (outlen % 16) {
+    memset(out, 0, outlen);
+    aes128_ctr_publicinputs(out, outlen, internal_iv, &ctx);
+  }
+  // TODO: is this needed..?
+  aes128_ctx_release_publicinputs(&ctx);
+#else
+  uint8_t internal_iv[16];
+  memcpy(internal_iv, iv, sizeof(internal_iv));
+
+  aes_round_keys_t round_key;
+
+  int rounds;
+  switch (seclvl) {
+  case 256:
+    aes256_init_round_keys(&round_key, key);
+    rounds = ROUNDS_256;
+    break;
+  case 192:
+    aes192_init_round_keys(&round_key, key);
+      rounds = ROUNDS_192;
+    break;
+  default:
+    aes128_init_round_keys(&round_key, key);
+    rounds = ROUNDS_128;
+    break;
+  }
+
+  unsigned char zero[16] = {0};
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(out, state, AES_BLOCK_WORDS);
+    aes_increment_iv(internal_iv);
+  }
+  if (outlen) {
+    uint8_t tmp[16];
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(tmp, state, AES_BLOCK_WORDS);
+    memcpy(out, tmp, outlen);
+  }
 #endif
 }
 

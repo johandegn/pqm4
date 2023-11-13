@@ -13,9 +13,6 @@
 
 FAEST_BEGIN_C_DECL
 
-#if defined(PQCLEAN)
-#include "aes-publicinputs.h"
-#endif
 #define AES_MAX_ROUNDS 14
 
 typedef uint8_t aes_word_t[4];
