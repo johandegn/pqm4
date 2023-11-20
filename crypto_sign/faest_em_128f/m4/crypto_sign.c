@@ -20,8 +20,8 @@ int crypto_sign_keypair(unsigned char* pk, unsigned char* sk) {
   return faest_em_128f_keygen(pk, sk);
 }
 
-int crypto_sign(unsigned char* sm, unsigned long long* smlen, const unsigned char* m,
-                unsigned long long mlen, const unsigned char* sk) {
+int crypto_sign(unsigned char* sm, size_t* smlen, const unsigned char* m,
+                size_t mlen, const unsigned char* sk) {
   *smlen = mlen + FAEST_EM_128F_SIGNATURE_SIZE;
   memmove(sm, m, mlen);
 
@@ -29,13 +29,13 @@ int crypto_sign(unsigned char* sm, unsigned long long* smlen, const unsigned cha
   return faest_em_128f_sign(sk, sm, mlen, sm + mlen, &signature_len);
 }
 
-int crypto_sign_open(unsigned char* m, unsigned long long* mlen, const unsigned char* sm,
-                     unsigned long long smlen, const unsigned char* pk) {
+int crypto_sign_open(unsigned char* m, size_t* mlen, const unsigned char* sm,
+                     size_t smlen, const unsigned char* pk) {
   if (smlen < FAEST_EM_128F_SIGNATURE_SIZE) {
     // signature too short
     return -1;
   }
-  unsigned long long m_length = smlen - FAEST_EM_128F_SIGNATURE_SIZE;
+  size_t m_length = smlen - FAEST_EM_128F_SIGNATURE_SIZE;
   if (faest_em_128f_verify(pk, sm, m_length, sm + m_length, FAEST_EM_128F_SIGNATURE_SIZE)) {
     return -1;
   }

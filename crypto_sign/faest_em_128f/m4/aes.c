@@ -375,7 +375,6 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
     break;
   }
 
-  unsigned char zero[16] = {0};
   for (; outlen >= 16; outlen -= 16, out += 16) {
     aes_block_t state;
     load_state(state, internal_iv, AES_BLOCK_WORDS);

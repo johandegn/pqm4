@@ -2,9 +2,9 @@
  *  SPDX-License-Identifier: MIT
  */
 
-#ifdef HAVE_CONFIG_H
+//#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
+//#endif
 
 #include "randomness.h"
 #include "macros.h"
@@ -12,8 +12,8 @@
 #if defined(HAVE_RANDOMBYTES) || defined(SUPERCOP)
 #if defined(PQCLEAN)
 // randombytes from the PQClean
-#include "randombytes.h" // NOTE: added
-extern int randombytes(uint8_t* x, size_t xlen); // NOTE: OG: extern void randombytes(uint8_t* x, size_t xlen); 
+#include "randombytes.h"
+extern int randombytes(uint8_t* x, size_t xlen);
 #else
 // randombytes from the NIST framework / SUPERCOP
 extern void randombytes(unsigned char* x, unsigned long long xlen);
