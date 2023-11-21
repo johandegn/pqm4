@@ -12,6 +12,10 @@
 #include "compat.h"
 #include "utils.h"
 
+#if defined(PQCLEAN)
+#include "aes-publicinputs.h"
+#endif
+
 #if defined(HAVE_OPENSSL)
 #include <openssl/evp.h>
 #endif
@@ -295,44 +299,7 @@ int rijndael256_encrypt_block(const aes_round_keys_t* key, const uint8_t* plaint
 }
 
 void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclvl, size_t outlen) {
-#if !defined(HAVE_OPENSSL)
-  uint8_t internal_iv[16];
-  memcpy(internal_iv, iv, sizeof(internal_iv));
-
-  aes_round_keys_t round_key;
-  int rounds;
-
-  switch (seclvl) {
-  case 256:
-    aes256_init_round_keys(&round_key, key);
-    rounds = ROUNDS_256;
-    break;
-  case 192:
-    aes192_init_round_keys(&round_key, key);
-    rounds = ROUNDS_192;
-    break;
-  default:
-    aes128_init_round_keys(&round_key, key);
-    rounds = ROUNDS_128;
-    break;
-  }
-
-  for (; outlen >= 16; outlen -= 16, out += 16) {
-    aes_block_t state;
-    load_state(state, internal_iv, AES_BLOCK_WORDS);
-    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
-    store_state(out, state, AES_BLOCK_WORDS);
-    aes_increment_iv(internal_iv);
-  }
-  if (outlen) {
-    aes_block_t state;
-    load_state(state, internal_iv, AES_BLOCK_WORDS);
-    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
-    uint8_t tmp[16];
-    store_state(tmp, state, AES_BLOCK_WORDS);
-    memcpy(out, tmp, outlen);
-  }
-#else
+#if defined(HAVE_OPENSSL)
   const EVP_CIPHER* cipher;
   switch (seclvl) {
   case 256:
@@ -362,6 +329,66 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   }
   EVP_EncryptFinal_ex(ctx, out, &len);
   EVP_CIPHER_CTX_free(ctx);
+#elif defined(PQCLEAN)
+  uint8_t internal_iv[16];
+  memcpy(internal_iv, iv, sizeof(internal_iv));
+
+  aes128ctx_publicinputs ctx;
+
+  // NOTE only implemented for 128
+  switch (seclvl) {
+  default:
+    aes128_ecb_keyexp_publicinputs(&ctx, key);
+    break;
+  }
+
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    aes128_ecb_publicinputs(out, internal_iv, 1, &ctx);
+    aes_increment_iv(internal_iv);
+  }
+  if (outlen % 16) {
+    uint8_t tmp[16];
+    aes128_ecb_publicinputs(tmp, internal_iv, 1, &ctx);
+    memcpy(out, tmp, outlen);
+  }
+  aes128_ctx_release_publicinputs(&ctx);
+#else
+  uint8_t internal_iv[16];
+  memcpy(internal_iv, iv, sizeof(internal_iv));
+
+  aes_round_keys_t round_key;
+  int rounds;
+
+  switch (seclvl) {
+  case 256:
+    aes256_init_round_keys(&round_key, key);
+    rounds = ROUNDS_256;
+    break;
+  case 192:
+    aes192_init_round_keys(&round_key, key);
+    rounds = ROUNDS_192;
+    break;
+  default:
+    aes128_init_round_keys(&round_key, key);
+    rounds = ROUNDS_128;
+    break;
+  }
+
+  for (; outlen >= 16; outlen -= 16, out += 16) {
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(out, state, AES_BLOCK_WORDS);
+    aes_increment_iv(internal_iv);
+  }
+  if (outlen) {
+    uint8_t tmp[16];
+    aes_block_t state;
+    load_state(state, internal_iv, AES_BLOCK_WORDS);
+    aes_encrypt(&round_key, state, AES_BLOCK_WORDS, rounds);
+    store_state(tmp, state, AES_BLOCK_WORDS);
+    memcpy(out, tmp, outlen);
+  }
 #endif
 }
 
