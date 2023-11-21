@@ -38,7 +38,7 @@ int main(void) {
   VALGRIND_MAKE_MEM_UNDEFINED(sk, sizeof(sk));
   VALGRIND_MAKE_MEM_UNDEFINED(message, sizeof(message));
 
-  unsigned long long smlen = sizeof(sm);
+  size_t smlen = sizeof(sm);
   ret                      = crypto_sign(sm, &smlen, message, sizeof(message), sk);
   if (ret != 0) {
     printf("Failed to sign\n");
@@ -49,7 +49,7 @@ int main(void) {
   VALGRIND_MAKE_MEM_DEFINED(sk, sizeof(sk));
   VALGRIND_MAKE_MEM_DEFINED(message, sizeof(message));
 
-  unsigned long long mlen = sizeof(omessage);
+  size_t mlen = sizeof(omessage);
   ret                     = crypto_sign_open(omessage, &mlen, sm, smlen, pk);
   if (ret != 0) {
     printf("Failed to verify (ret = %d)\n", ret);
@@ -58,7 +58,7 @@ int main(void) {
 
   if (mlen != sizeof(message)) {
     printf("length of message after verify incorrect, got " LL_FMT ", expected " SIZET_FMT "\n",
-           mlen, sizeof(message));
+           (unsigned long long)mlen, sizeof(message));
     return -1;
   }
   if (memcmp(message, omessage, sizeof(message)) != 0) {
@@ -85,7 +85,7 @@ int main(void) {
 
   if (mlen != sizeof(message)) {
     printf("length of message after verify incorrect, got " LL_FMT ", expected " SIZET_FMT "\n",
-           mlen, sizeof(message));
+           (unsigned long long)mlen, sizeof(message));
     return -1;
   }
   if (memcmp(message, sm, sizeof(message)) != 0) {

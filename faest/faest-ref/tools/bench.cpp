@@ -84,7 +84,7 @@ namespace {
         break;
       }
 
-      unsigned long long smlen = sig.size();
+      size_t smlen = sig.size();
 
       start_time  = high_resolution_clock::now();
       ret         = crypto_sign(sig.data(), &smlen, msg.data(), msg.size(), sk.data());
@@ -95,7 +95,7 @@ namespace {
       }
 
       std::array<uint8_t, 32> msg1;
-      unsigned long long msg1len = msg1.size();
+      size_t msg1len = msg1.size();
 
       start_time    = high_resolution_clock::now();
       ret           = crypto_sign_open(msg1.data(), &msg1len, sig.data(), smlen, pk.data());
