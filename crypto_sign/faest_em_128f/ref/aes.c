@@ -338,20 +338,19 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   // NOTE only implemented for 128
   switch (seclvl) {
   default:
-    aes128_ctr_keyexp_publicinputs(&ctx, key);
+    aes128_ecb_keyexp_publicinputs(&ctx, key);
     break;
   }
 
   for (; outlen >= 16; outlen -= 16, out += 16) {
-    memset(out, 0, 16);
-    aes128_ctr_publicinputs(out, 16, internal_iv, &ctx);
+    aes128_ecb_publicinputs(out, internal_iv, 1, &ctx);
     aes_increment_iv(internal_iv);
   }
   if (outlen % 16) {
-    memset(out, 0, outlen);
-    aes128_ctr_publicinputs(out, outlen, internal_iv, &ctx);
+    uint8_t tmp[16];
+    aes128_ecb_publicinputs(tmp, internal_iv, 1, &ctx);
+    memcpy(out, tmp, outlen);
   }
-  // TODO: is this needed..?
   aes128_ctx_release_publicinputs(&ctx);
 #else
   uint8_t internal_iv[16];
@@ -367,7 +366,7 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
     break;
   case 192:
     aes192_init_round_keys(&round_key, key);
-      rounds = ROUNDS_192;
+    rounds = ROUNDS_192;
     break;
   default:
     aes128_init_round_keys(&round_key, key);
