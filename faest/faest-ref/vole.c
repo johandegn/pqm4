@@ -12,6 +12,7 @@
 #include "random_oracle.h"
 
 #include <stdbool.h>
+#include <string.h>
 
 int ChalDec(const uint8_t* chal, unsigned int i, unsigned int k0, unsigned int t0, unsigned int k1,
             unsigned int t1, uint8_t* chalout) {

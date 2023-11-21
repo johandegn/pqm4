@@ -50,7 +50,7 @@ int main() {
   unsigned char msg[3300];
   unsigned char entropy_input[48];
   unsigned char *m, *sm, *m1;
-  unsigned long long mlen, smlen, mlen1;
+  size_t mlen, smlen, mlen1;
   int count;
   int done;
   unsigned char pk[CRYPTO_PUBLICKEYBYTES], sk[CRYPTO_SECRETKEYBYTES];
