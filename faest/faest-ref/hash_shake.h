@@ -8,6 +8,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "macros.h"
 #include "endian_compat.h"
 
