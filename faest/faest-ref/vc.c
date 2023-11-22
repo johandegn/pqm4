@@ -24,21 +24,46 @@ unsigned int NumRec(unsigned int depth, const uint8_t* bi) {
 }
 
 // index is the index i for (sd_i, com_i)
-void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
+void get_sd_com(stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
   const unsigned int lambdaBytes = lambda / 8;
 
   uint8_t* children = malloc(lambdaBytes * 2);
   uint8_t* l_child = children;
   uint8_t* r_child = l_child + lambdaBytes;
-  memcpy(l_child, sVecCom->rootKey, lambdaBytes);
-  uint8_t* node = l_child;
 
   size_t lo = 0;
-  unsigned int leaf_count = (1 << sVecCom->depth);
+  size_t leaf_count = (1 << sVecCom->depth);
   size_t hi = leaf_count - 1;
   size_t center;
 
-  for (size_t i = 0; i < sVecCom->depth; i++) {
+  // Find starting point from path memory
+  size_t i = 0;
+  if (sVecCom->index != sVecCom->depth) {
+    for (; i < sVecCom->depth; i++) {
+      center = (hi - lo) / 2 + lo;
+      if (index <= center) { // Left
+        if (sVecCom->index > center)
+          break;
+        hi = center;
+      }
+      else { // Right
+        if (sVecCom->index < center + 1)
+          break;
+        lo = center + 1;
+      }
+    }
+  }
+
+  // Set starting node
+  uint8_t* node;
+  if (i > 0)
+    node = sVecCom->path + (i - 1) * lambdaBytes;
+  else
+    node = sVecCom->rootKey;
+
+
+  // Continue computing until leaf is reached
+  for (; i < sVecCom->depth; i++) {
     prg(node, iv, children, lambda, lambdaBytes * 2);
 
     center = (hi - lo) / 2 + lo;
@@ -50,7 +75,10 @@ void get_sd_com(const stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lam
       node = r_child;
       lo = center + 1;
     }
+    memcpy(sVecCom->path + i * lambdaBytes, node, lambdaBytes);
   }
+
+  sVecCom->index = index;
 
   H0_context_t h0_ctx;
   H0_init(&h0_ctx, lambda);
@@ -70,13 +98,13 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
   uint8_t* node;
 
   size_t lo = 0;
-  unsigned int leaf_count = (1 << depth);
+  size_t leaf_count = (1 << depth);
   size_t hi = leaf_count - 1;
   size_t center;
   uint8_t* b = sVecComRec->b;
 
-  unsigned int idx = NumRec(depth, b);
-  unsigned int real_index = index ^ idx;
+  size_t idx = NumRec(depth, b);
+  size_t real_index = index ^ idx;
 
   // Find first known node on path
   size_t i = 0;
@@ -98,8 +126,7 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
     }
   }
   // NOTE: we could have reaced the unknown leaf if malformed signature
-  memcpy(l_child, sVecComRec->nodes + lambdaBytes * i, lambdaBytes);
-  node = l_child;
+  node = sVecComRec->nodes + lambdaBytes * i;
   ++i;
   // Continue computing until leaf is reached
   for (; i < depth; i++) {
@@ -129,6 +156,8 @@ void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_ve
   const unsigned int lambdaBytes = lambda / 8;
   memcpy(sVecCom->rootKey, rootKey, lambdaBytes);
   sVecCom->depth = depth;
+  sVecCom->index = depth; // Signals no path yet
+  sVecCom->path = malloc(lambdaBytes * depth);
 }
 
 void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* cop,
@@ -138,8 +167,7 @@ void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* co
   uint8_t* children = malloc(lambdaBytes * 2);
   uint8_t* l_child = children;
   uint8_t* r_child = l_child + lambdaBytes;
-  memcpy(l_child, sVecCom->rootKey, lambdaBytes);
-  uint8_t* node = l_child;
+  uint8_t* node = sVecCom->rootKey;
 
   // Step: 3..6
   uint8_t save_left;
@@ -172,6 +200,10 @@ void stream_vector_reconstruction(const uint8_t* cop, const uint8_t* com_j, cons
   memcpy(sVecComRec->b, b, depth);
   memcpy(sVecComRec->nodes, cop, lambdaBytes * depth);
   memcpy(sVecComRec->com_j, com_j, lambdaBytes * 2);
+}
+
+void stream_vec_com_clear(stream_vec_com_t* svec) {
+  free(svec->path);
 }
 
 void stream_vec_com_rec_clear(stream_vec_com_rec_t* srec) {
