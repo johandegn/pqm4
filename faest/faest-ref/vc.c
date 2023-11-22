@@ -90,13 +90,12 @@ void get_sd_com(stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, u
   free(children);
 }
 
-void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
+void get_sd_com_rec(stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, uint32_t lambda, unsigned int index, uint8_t* sd, uint8_t* com) {
   const unsigned int lambdaBytes = lambda / 8;
   const unsigned int depth = sVecComRec->depth;
   uint8_t* children = malloc(lambdaBytes * 2);
   uint8_t* l_child = children;
   uint8_t* r_child = l_child + lambdaBytes;
-  uint8_t* node;
 
   size_t lo = 0;
   size_t leaf_count = (1 << depth);
@@ -127,10 +126,34 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
     }
   }
   // NOTE: we could have reaced the unknown leaf if malformed signature
-  node = sVecComRec->nodes + lambdaBytes * i;
+  uint8_t* node = sVecComRec->nodes + lambdaBytes * i;
   ++i;
+  
+  size_t j = 0;
+  // Continue in path memory
+  if (sVecComRec->path != NULL && sVecComRec->index != depth 
+      && sVecComRec->index <= hi && sVecComRec->index >= lo) {
+    for (; i < depth; i++, j++) {
+      center = (hi - lo) / 2 + lo;
+      if (real_index <= center) { // Left
+        if (sVecComRec->index > center)
+          break;
+        hi = center;
+      }
+      else { // Right
+        if (sVecComRec->index < center + 1)
+          break;
+        lo = center + 1;
+      }
+    }
+  }
+  
+  // Set starting node
+  if (j > 0)
+    node = sVecComRec->path + (j - 1) * lambdaBytes;
+
   // Continue computing until leaf is reached
-  for (; i < depth; i++) {
+  for (; i < depth; i++, j++) {
     prg(node, iv, children, lambda, lambdaBytes * 2);
 
     center = (hi - lo) / 2 + lo;
@@ -142,7 +165,11 @@ void get_sd_com_rec(const stream_vec_com_rec_t* sVecComRec, const uint8_t* iv, u
       node = r_child;
       lo = center + 1;
     }
+    if (sVecComRec->path != NULL)
+      memcpy(sVecComRec->path + j * lambdaBytes, node, lambdaBytes);
   }
+
+  sVecComRec->index = real_index;
   
   H0_context_t h0_ctx;
   H0_init(&h0_ctx, lambda);
@@ -197,6 +224,7 @@ void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* co
 void stream_vector_reconstruction(const uint8_t* cop, const uint8_t* com_j, const uint8_t* b, uint32_t lambda, uint32_t depth, stream_vec_com_rec_t* sVecComRec) {
   const unsigned int lambdaBytes = lambda / 8;
   sVecComRec->depth = depth;
+  sVecComRec->index = depth; // Signals no path yet
   memcpy(sVecComRec->b, b, depth);
   memcpy(sVecComRec->nodes, cop, lambdaBytes * depth);
   memcpy(sVecComRec->com_j, com_j, lambdaBytes * 2);
@@ -217,4 +245,6 @@ void stream_vec_com_rec_clear(stream_vec_com_rec_t* srec) {
   free(srec->b);
   free(srec->nodes);
   free(srec->com_j);
+  free(srec->path);
+  srec->path = NULL;
 }

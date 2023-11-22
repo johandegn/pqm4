@@ -217,6 +217,7 @@ void stream_vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint
   sVecComRec.b = malloc(max_depth * sizeof(uint8_t));
   sVecComRec.nodes = calloc(max_depth, lambda_bytes);
   sVecComRec.com_j = malloc(lambda_bytes * 2);
+  sVecComRec.path = malloc(lambda_bytes * (max_depth - 1));
 
   uint8_t* h = malloc(lambda_bytes * 2);
   // Step: 1
