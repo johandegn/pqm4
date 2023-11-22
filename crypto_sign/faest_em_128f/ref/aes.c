@@ -357,8 +357,8 @@ void prg(const uint8_t* key, const uint8_t* iv, uint8_t* out, unsigned int seclv
   memcpy(internal_iv, iv, sizeof(internal_iv));
 
   aes_round_keys_t round_key;
-
   int rounds;
+
   switch (seclvl) {
   case 256:
     aes256_init_round_keys(&round_key, key);

@@ -362,11 +362,6 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
     stream_vector_open(&sVecCom[i], s_, signature_pdec(sig, i, params),
                 signature_com(sig, i, params), depth, signature_iv(sig, params), lambda);
   }
-  
-  for (unsigned int i = 0; i < tau; i++) {
-    stream_vec_com_clear(sVecCom + i);
-  }
-  
   free(sVecCom);
   sVecCom = NULL;
 }

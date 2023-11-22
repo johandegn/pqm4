@@ -38,7 +38,7 @@ void get_sd_com(stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, u
 
   // Find starting point from path memory
   size_t i = 0;
-  if (sVecCom->index != sVecCom->depth) {
+  if (sVecCom->path != NULL && sVecCom->index != sVecCom->depth) {
     for (; i < sVecCom->depth; i++) {
       center = (hi - lo) / 2 + lo;
       if (index <= center) { // Left
@@ -75,7 +75,8 @@ void get_sd_com(stream_vec_com_t* sVecCom, const uint8_t* iv, uint32_t lambda, u
       node = r_child;
       lo = center + 1;
     }
-    memcpy(sVecCom->path + i * lambdaBytes, node, lambdaBytes);
+    if (sVecCom->path != NULL)
+      memcpy(sVecCom->path + i * lambdaBytes, node, lambdaBytes);
   }
 
   sVecCom->index = index;
@@ -156,8 +157,7 @@ void stream_vector_commitment(const uint8_t* rootKey, uint32_t lambda, stream_ve
   const unsigned int lambdaBytes = lambda / 8;
   memcpy(sVecCom->rootKey, rootKey, lambdaBytes);
   sVecCom->depth = depth;
-  sVecCom->index = depth; // Signals no path yet
-  sVecCom->path = malloc(lambdaBytes * depth);
+  sVecCom->path = NULL;
 }
 
 void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* cop,
@@ -202,8 +202,15 @@ void stream_vector_reconstruction(const uint8_t* cop, const uint8_t* com_j, cons
   memcpy(sVecComRec->com_j, com_j, lambdaBytes * 2);
 }
 
-void stream_vec_com_clear(stream_vec_com_t* svec) {
+void stream_vec_com_init_path(stream_vec_com_t* svec, uint32_t lambda) {
+  const unsigned int lambdaBytes = lambda / 8;
+  svec->index = svec->depth; // Signals no path yet
+  svec->path = malloc(lambdaBytes * svec->depth);
+}
+
+void stream_vec_com_clear_path(stream_vec_com_t* svec) {
   free(svec->path);
+  svec->path = NULL;
 }
 
 void stream_vec_com_rec_clear(stream_vec_com_rec_t* srec) {

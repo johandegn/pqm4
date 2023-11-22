@@ -34,7 +34,8 @@ void stream_vector_open(stream_vec_com_t* sVecCom, const uint8_t* b, uint8_t* co
 
 void stream_vector_reconstruction(const uint8_t* cop, const uint8_t* com_j, const uint8_t* b, uint32_t lambda, uint32_t depth, stream_vec_com_rec_t* sVecComRec);
 
-void stream_vec_com_clear(stream_vec_com_t* svec);
+void stream_vec_com_init_path(stream_vec_com_t* svec, uint32_t lambda);
+void stream_vec_com_clear_path(stream_vec_com_t* svec);
 void stream_vec_com_rec_clear(stream_vec_com_rec_t* srec);
 
 FAEST_END_C_DECL

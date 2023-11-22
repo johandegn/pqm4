@@ -96,7 +96,6 @@ static inline void hash_clear(hash_context* ctx) {
     OQS_SHA3_shake128_inc_ctx_release(&ctx->shake128_ctx);
   }
 }
-
 #if defined(OQS)
 /* Instances that work with 4 states in parallel using the base implementation. */
 typedef struct hash_context_x4_oqs_s {

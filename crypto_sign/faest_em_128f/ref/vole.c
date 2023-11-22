@@ -174,7 +174,9 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
     // Step 5
     stream_vector_commitment(expanded_keys + i * lambda_bytes, lambda, &sVecCom[i], depth);
     // Step 6
+    stream_vec_com_init_path(&sVecCom[i], lambda);
     StreamConstructVole(iv, &sVecCom[i], lambda, ellhat_bytes, ui + i * ellhat_bytes, v[v_idx], h);
+    stream_vec_com_clear_path(&sVecCom[i]);
     // Step 7 (and parts of 8)
     v_idx += depth;
     // Step 12 (part)
