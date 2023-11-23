@@ -288,9 +288,9 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   // Step: 3
   uint8_t hcom[MAX_LAMBDA_BYTES * 2];
   stream_vec_com_t* sVecCom = calloc(tau, sizeof(stream_vec_com_t));
-  uint8_t* u        = malloc(ell_hat_bytes);
+  uint8_t* u        = alloca(ell_hat_bytes);
   // v has \hat \ell rows, \lambda columns, storing in column-major order
-  uint8_t** V = malloc(lambda * sizeof(uint8_t*));
+  uint8_t** V = alloca(lambda * sizeof(uint8_t*));
   V[0]        = calloc(lambda, ell_hat_bytes);
   for (unsigned int i = 1; i < lambda; ++i) {
     V[i] = V[0] + i * ell_hat_bytes;
@@ -340,12 +340,8 @@ void faest_sign(uint8_t* sig, const uint8_t* msg, size_t msglen, const uint8_t* 
   aes_prove(w, u, V, owf_input, owf_output, chall_2, signature_a_tilde(sig, params), b_tilde,
             params);
   free(V[0]);
-  free(V);
-  V = NULL;
   free(w);
   w = NULL;
-  free(u);
-  u = NULL;
 
   // Step: 17
   hash_challenge_3(signature_chall_3(sig, params), chall_2, signature_a_tilde(sig, params), b_tilde,
@@ -385,7 +381,7 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
 
   // Step: 5
   // q prime is a \hat \ell \times \lambda matrix
-  uint8_t** qprime = malloc(lambda * sizeof(uint8_t*));
+  uint8_t** qprime = alloca(lambda * sizeof(uint8_t*));
   qprime[0]        = calloc(lambda, ell_hat_bytes);
   for (unsigned int i = 1; i < lambda; ++i) {
     qprime[i] = qprime[0] + i * ell_hat_bytes;
@@ -409,13 +405,13 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
                    lambda, l, tau);
 
   // Step: 8..14
-  uint8_t** q = malloc(lambda * sizeof(uint8_t*));
+  uint8_t** q = alloca(lambda * sizeof(uint8_t*));
   q[0]        = calloc(lambda, ell_hat_bytes);
   for (unsigned int i = 1; i < lambda; ++i) {
     q[i] = q[0] + i * ell_hat_bytes;
   }
 
-  uint8_t** Dtilde = malloc(lambda * sizeof(uint8_t*));
+  uint8_t** Dtilde = alloca(lambda * sizeof(uint8_t*));
   Dtilde[0]        = calloc(lambda, (lambdaBytes + UNIVERSAL_HASH_B));
   for (unsigned int i = 1; i < lambda; ++i) {
     Dtilde[i] = Dtilde[0] + i * (lambdaBytes + UNIVERSAL_HASH_B);
@@ -451,8 +447,6 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
     }
   }
   free(qprime[0]);
-  free(qprime);
-  qprime = NULL;
 
   // Step 15 and 16
   uint8_t h_v[MAX_LAMBDA_BYTES * 2];
@@ -472,8 +466,6 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
     H1_final(&h1_ctx_1, h_v, lambdaBytes * 2);
   }
   free(Dtilde[0]);
-  free(Dtilde);
-  Dtilde = NULL;
 
   // Step 17
   uint8_t chall_2[3 * MAX_LAMBDA_BYTES + 8];
@@ -485,8 +477,6 @@ int faest_verify(const uint8_t* msg, size_t msglen, const uint8_t* sig, const ui
       aes_verify(dsignature_d(sig, params), q, chall_2, dsignature_chall_3(sig, params),
                  dsignature_a_tilde(sig, params), owf_input, owf_output, params);
   free(q[0]);
-  free(q);
-  q = NULL;
 
   // Step: 20
   uint8_t chall_3[MAX_LAMBDA_BYTES];
