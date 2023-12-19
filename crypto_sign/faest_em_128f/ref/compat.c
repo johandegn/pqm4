@@ -75,7 +75,7 @@ void* faest_aligned_alloc(size_t alignment, size_t size) {
     return NULL;
   }
   const size_t offset = alignment - 1 + sizeof(uint8_t);
-  uint8_t* buffer     = malloc(size + offset);
+  uint8_t* buffer     = alloca(size + offset);
   if (!buffer) {
     return NULL;
   }
