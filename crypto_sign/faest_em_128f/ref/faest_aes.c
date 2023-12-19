@@ -642,10 +642,9 @@ static void aes_prove_128(const uint8_t* w, const uint8_t* u, uint8_t** V, const
   free(A1);
 }
 
-static uint8_t* aes_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void aes_verify_128(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                                const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                                const uint8_t* out, const faest_paramset_t* params) {
-  const unsigned int lambda      = params->faest_param.lambda;
   const unsigned int tau         = params->faest_param.tau;
   const unsigned int t0          = params->faest_param.t0;
   const unsigned int k0          = params->faest_param.k0;
@@ -656,7 +655,6 @@ static uint8_t* aes_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   const unsigned int R           = params->faest_param.R;
   const unsigned int Ske         = params->faest_param.Ske;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   // Step: 1
   const uint8_t* delta = chall_3;
@@ -703,14 +701,11 @@ static uint8_t* aes_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   free(bf_q);
 
   // Step 21
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_128(q_tilde, chall_2, B_0, length_b - 1);
   free(B_0);
 
   bf128_t bf_qtilde = bf128_load(q_tilde);
   bf128_store(q_tilde, bf128_add(bf_qtilde, bf128_mul(bf128_load(a_tilde), bf128_load(delta))));
-
-  return q_tilde;
 }
 
 // lambda == 192 implementation
@@ -1200,10 +1195,9 @@ static void aes_prove_192(const uint8_t* w, const uint8_t* u, uint8_t** V, const
   free(A1);
 }
 
-static uint8_t* aes_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void aes_verify_192(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                                const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                                const uint8_t* out, const faest_paramset_t* params) {
-  const unsigned int lambda      = params->faest_param.lambda;
   const unsigned int tau         = params->faest_param.tau;
   const unsigned int t0          = params->faest_param.t0;
   const unsigned int k0          = params->faest_param.k0;
@@ -1215,7 +1209,6 @@ static uint8_t* aes_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   const unsigned int R           = params->faest_param.R;
   const unsigned int Ske         = params->faest_param.Ske;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   // Step: 1
   const uint8_t* delta = chall_3;
@@ -1266,14 +1259,11 @@ static uint8_t* aes_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   free(bf_q);
 
   // Step 21
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_192(q_tilde, chall_2, B_0, length_b - 1);
   free(B_0);
 
   bf192_t bf_qtilde = bf192_load(q_tilde);
   bf192_store(q_tilde, bf192_add(bf_qtilde, bf192_mul(bf192_load(a_tilde), bf192_load(delta))));
-
-  return q_tilde;
 }
 
 // lambda == 256 implementation
@@ -1781,10 +1771,9 @@ static void aes_prove_256(const uint8_t* w, const uint8_t* u, uint8_t** V, const
   free(A1);
 }
 
-static uint8_t* aes_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void aes_verify_256(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                                const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                                const uint8_t* out, const faest_paramset_t* params) {
-  const unsigned int lambda      = params->faest_param.lambda;
   const unsigned int tau         = params->faest_param.tau;
   const unsigned int t0          = params->faest_param.t0;
   const unsigned int k0          = params->faest_param.k0;
@@ -1796,7 +1785,6 @@ static uint8_t* aes_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   const unsigned int R           = params->faest_param.R;
   const unsigned int Ske         = params->faest_param.Ske;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   // Step: 1
   const uint8_t* delta = chall_3;
@@ -1847,14 +1835,11 @@ static uint8_t* aes_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* cha
   free(bf_q);
 
   // Step 21
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_256(q_tilde, chall_2, B_0, length_b - 1);
   free(B_0);
 
   bf256_t bf_qtilde = bf256_load(q_tilde);
   bf256_store(q_tilde, bf256_add(bf_qtilde, bf256_mul(bf256_load(a_tilde), bf256_load(delta))));
-
-  return q_tilde;
 }
 
 // EM-128
@@ -2261,7 +2246,7 @@ static void em_prove_128(const uint8_t* w, const uint8_t* u, uint8_t** V, const 
   free(A1);
 }
 
-static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void em_verify_128(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                               const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                               const uint8_t* out, const faest_paramset_t* params) {
   const unsigned int lambda      = params->faest_param.lambda;
@@ -2273,7 +2258,6 @@ static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   const unsigned int Lenc        = params->faest_param.Lenc;
   const unsigned int R           = params->faest_param.R;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   const uint8_t* delta = chall_3;
 
@@ -2315,14 +2299,11 @@ static uint8_t* em_verify_128(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   B[length_b - 1] = bf128_sum_poly(bf_q + Lenc);
   free(bf_q);
 
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_128(q_tilde, chall_2, B, length_b - 1);
   free(B);
 
   bf128_t bf_qtilde = bf128_load(q_tilde);
   bf128_store(q_tilde, bf128_add(bf_qtilde, bf128_mul(bf128_load(a_tilde), bf128_load(delta))));
-
-  return q_tilde;
 }
 
 // EM-192
@@ -2622,7 +2603,7 @@ static void em_prove_192(const uint8_t* w, const uint8_t* u, uint8_t** V, const 
   free(A1);
 }
 
-static uint8_t* em_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void em_verify_192(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                               const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                               const uint8_t* out, const faest_paramset_t* params) {
   const unsigned int lambda      = params->faest_param.lambda;
@@ -2634,7 +2615,6 @@ static uint8_t* em_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   const unsigned int Lenc        = params->faest_param.Lenc;
   const unsigned int R           = params->faest_param.R;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   const uint8_t* delta = chall_3;
 
@@ -2674,14 +2654,11 @@ static uint8_t* em_verify_192(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   B[length_b - 1] = bf192_sum_poly(bf_q + Lenc);
   free(bf_q);
 
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_192(q_tilde, chall_2, B, length_b - 1);
   free(B);
 
   bf192_t bf_qtilde = bf192_load(q_tilde);
   bf192_store(q_tilde, bf192_add(bf_qtilde, bf192_mul(bf192_load(a_tilde), bf192_load(delta))));
-
-  return q_tilde;
 }
 
 // EM-256
@@ -2982,7 +2959,7 @@ static void em_prove_256(const uint8_t* w, const uint8_t* u, uint8_t** V, const 
   free(A1);
 }
 
-static uint8_t* em_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
+static void em_verify_256(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2,
                               const uint8_t* chall_3, const uint8_t* a_tilde, const uint8_t* in,
                               const uint8_t* out, const faest_paramset_t* params) {
   const unsigned int lambda      = params->faest_param.lambda;
@@ -2994,7 +2971,6 @@ static uint8_t* em_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   const unsigned int Lenc        = params->faest_param.Lenc;
   const unsigned int R           = params->faest_param.R;
   const unsigned int Senc        = params->faest_param.Senc;
-  const unsigned int lambdaBytes = lambda / 8;
 
   const uint8_t* delta = chall_3;
 
@@ -3034,14 +3010,11 @@ static uint8_t* em_verify_256(const uint8_t* d, uint8_t** Q, const uint8_t* chal
   B[length_b - 1] = bf256_sum_poly(bf_q + Lenc);
   free(bf_q);
 
-  uint8_t* q_tilde = malloc(lambdaBytes);
   zk_hash_256(q_tilde, chall_2, B, length_b - 1);
   free(B);
 
   bf256_t bf_qtilde = bf256_load(q_tilde);
   bf256_store(q_tilde, bf256_add(bf_qtilde, bf256_mul(bf256_load(a_tilde), bf256_load(delta))));
-
-  return q_tilde;
 }
 
 // dispatchers
@@ -3073,27 +3046,33 @@ void aes_prove(const uint8_t* w, const uint8_t* u, uint8_t** V, const uint8_t* i
   }
 }
 
-uint8_t* aes_verify(const uint8_t* d, uint8_t** Q, const uint8_t* chall_2, const uint8_t* chall_3,
+void aes_verify(uint8_t* q_tilde, const uint8_t* d, uint8_t** Q, const uint8_t* chall_2, const uint8_t* chall_3,
                     const uint8_t* a_tilde, const uint8_t* in, const uint8_t* out,
                     const faest_paramset_t* params) {
   switch (params->faest_param.lambda) {
   case 256:
     if (params->faest_param.Lke) {
-      return aes_verify_256(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      aes_verify_256(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     } else {
-      return em_verify_256(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      em_verify_256(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     }
   case 192:
     if (params->faest_param.Lke) {
-      return aes_verify_192(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      aes_verify_192(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     } else {
-      return em_verify_192(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      em_verify_192(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     }
   default:
     if (params->faest_param.Lke) {
-      return aes_verify_128(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      aes_verify_128(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     } else {
-      return em_verify_128(d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      em_verify_128(q_tilde, d, Q, chall_2, chall_3, a_tilde, in, out, params);
+      return;
     }
   }
 }

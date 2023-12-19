@@ -44,15 +44,16 @@ void StreamConstructVole(const uint8_t* iv, stream_vec_com_t* sVecCom, unsigned 
   const unsigned int num_instances = 1 << depth;
   const unsigned int lambda_bytes  = lambda / 8;
 
-  uint8_t* stack = calloc(depth+1, outLenBytes);
+  uint8_t* stack = alloca((depth+1) * outLenBytes);
+  memset(stack, 0, (depth+1) * outLenBytes);
   memset(v, 0, depth * outLenBytes);
   unsigned int stack_index = 1;
 #define V(idx) (v + (idx)*outLenBytes)
 #define STACK_PEAK(depth) (stack + (stack_index - 1 - depth) * outLenBytes)
 
 
-  uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com = malloc(lambda_bytes * 2);
+  uint8_t sd[MAX_LAMBDA_BYTES];
+  uint8_t com[MAX_LAMBDA_BYTES * 2];
 
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
@@ -78,14 +79,11 @@ void StreamConstructVole(const uint8_t* iv, stream_vec_com_t* sVecCom, unsigned 
       stack_index--;
     }
   }
-  free(sd);
-  free(com);
   
   // Step: 10
   if (u != NULL) {
     memcpy(u, stack, outLenBytes);
   }
-  free(stack);
 
   H1_final(&h1_ctx, h, lambda_bytes * 2);
 }
@@ -95,15 +93,16 @@ void StreamReconstructVole(const uint8_t* iv, stream_vec_com_rec_t* sVecComRec, 
   const unsigned int num_instances = 1 << depth;
   const unsigned int lambda_bytes  = lambda / 8;
 
-  uint8_t* stack = calloc(depth+1, outLenBytes);
+  uint8_t* stack = alloca((depth+1) * outLenBytes);
+  memset(stack, 0, (depth+1) * outLenBytes);
   memset(q, 0, depth * outLenBytes);
   unsigned int stack_index = 1;
 #define Q(idx) (q + (idx)*outLenBytes)
 #define STACK_PEAK(depth) (stack + (stack_index - 1 - depth) * outLenBytes)
 
 
-  uint8_t* sd = malloc(lambda_bytes);
-  uint8_t* com = malloc(lambda_bytes * 2);
+  uint8_t sd[MAX_LAMBDA_BYTES];
+  uint8_t com[MAX_LAMBDA_BYTES * 2];
 
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
@@ -124,8 +123,6 @@ void StreamReconstructVole(const uint8_t* iv, stream_vec_com_rec_t* sVecComRec, 
       stack_index--;
     }
   }
-  
-  free(stack);
 
 
   // Run through to compute h
@@ -139,8 +136,6 @@ void StreamReconstructVole(const uint8_t* iv, stream_vec_com_rec_t* sVecComRec, 
     get_sd_com_rec(sVecComRec, iv, lambda, index, sd, com);
     H1_update(&h1_ctx, com, lambda_bytes * 2);
   }
-  free(sd);
-  free(com);
 
   H1_final(&h1_ctx, h, lambda_bytes * 2);
 }
@@ -156,16 +151,18 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
   unsigned int k0           = params->faest_param.k0;
   unsigned int k1           = params->faest_param.k1;
 
-  uint8_t* ui = malloc(tau * ellhat_bytes);
+  uint8_t* ui = alloca(tau * ellhat_bytes);
 
   // Step 1
-  uint8_t* expanded_keys = malloc(tau * lambda_bytes);
+  uint8_t* expanded_keys = alloca(tau * lambda_bytes);
   prg(rootKey, iv, expanded_keys, lambda, lambda_bytes * tau);
 
   // for Step 12
   H1_context_t h1_ctx;
   H1_init(&h1_ctx, lambda);
-  uint8_t* h = malloc(lambda_bytes * 2);
+  uint8_t h[MAX_LAMBDA_BYTES * 2];
+
+  uint8_t *path = alloca(MAX(k0, k1) * lambda_bytes);
 
   unsigned int v_idx = 0;
   for (unsigned int i = 0; i < tau; i++) {
@@ -174,23 +171,21 @@ void stream_vole_commit(const uint8_t* rootKey, const uint8_t* iv, unsigned int 
     // Step 5
     stream_vector_commitment(expanded_keys + i * lambda_bytes, lambda, &sVecCom[i], depth);
     // Step 6
-    stream_vec_com_init_path(&sVecCom[i], lambda);
+    sVecCom[i].path = path;
+    sVecCom[i].index = sVecCom[i].depth; // Signals no path yet
     StreamConstructVole(iv, &sVecCom[i], lambda, ellhat_bytes, ui + i * ellhat_bytes, v[v_idx], h);
-    stream_vec_com_clear_path(&sVecCom[i]);
+    sVecCom[i].path = NULL;
     // Step 7 (and parts of 8)
     v_idx += depth;
     // Step 12 (part)
     H1_update(&h1_ctx, h, lambda_bytes * 2);
   }
-  free(h);
-  free(expanded_keys);
   // Step 9
   memcpy(u, ui, ellhat_bytes);
   for (unsigned int i = 1; i < tau; i++) {
     // Step 11
     xor_u8_array(u, ui + i * ellhat_bytes, c + (i - 1) * ellhat_bytes, ellhat_bytes);
   }
-  free(ui);
 
   // Step 12: Generating final commitment from all the com commitments
   H1_final(&h1_ctx, hcom, lambda_bytes * 2);
@@ -214,12 +209,13 @@ void stream_vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint
 
   stream_vec_com_rec_t sVecComRec;
   unsigned int max_depth = MAX(k0, k1);
-  sVecComRec.b = malloc(max_depth * sizeof(uint8_t));
-  sVecComRec.nodes = calloc(max_depth, lambda_bytes);
-  sVecComRec.com_j = malloc(lambda_bytes * 2);
-  sVecComRec.path = malloc(lambda_bytes * (max_depth - 1));
+  sVecComRec.b = alloca(max_depth * sizeof(uint8_t));
+  sVecComRec.nodes = alloca(max_depth * lambda_bytes);
+  memset(sVecComRec.nodes, 0, max_depth * lambda_bytes);
+  sVecComRec.com_j = alloca(lambda_bytes * 2);
+  sVecComRec.path = alloca(lambda_bytes * (max_depth - 1));
 
-  uint8_t* h = malloc(lambda_bytes * 2);
+  uint8_t h[MAX_LAMBDA_BYTES * 2];
   // Step: 1
   unsigned int q_idx = 0;
   for (unsigned int i = 0; i < tau; i++) {
@@ -239,8 +235,6 @@ void stream_vole_reconstruct(const uint8_t* iv, const uint8_t* chall, const uint
     // Step 9
     H1_update(&h1_ctx, h, lambda_bytes * 2);
   }
-  free(h);
-  stream_vec_com_rec_clear(&sVecComRec);
 
   // Step: 9
   H1_final(&h1_ctx, hcom, lambda_bytes * 2);
